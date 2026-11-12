@@ -1,0 +1,198 @@
+-- ============================================================
+--  NOSSA DATA — configuração do Supabase
+--  Rode este arquivo inteiro no SQL Editor do seu projeto.
+--  (Supabase → SQL Editor → New query → colar → Run)
+-- ============================================================
+--
+--  PASSO A PASSO
+--
+--  1. Crie uma conta gratuita em https://supabase.com e um projeto
+--     novo (qualquer nome, escolha uma senha e a região South America).
+--
+--  2. Abra o SQL Editor e rode todo este arquivo.
+--     Ele cria:
+--       - o bucket "midias"  (público, guarda as fotos e músicas)
+--       - a tabela "biblioteca" (uma linha só, com a lista do que aparece)
+--       - a tabela "mensagens" (os recadinhos de vocês dois)
+--       - as permissões para o site poder ler e gravar
+--
+--  3. Pegue a URL e a chave do projeto:
+--     Supabase → Project Settings (engrenagem) → API
+--       - "Project URL"        → copie
+--       - "anon public"        → copie (a chave longa que começa com eyJ)
+--
+--  4. Abra o index.html e procure estas duas linhas (perto do início
+--     do script, na parte "BIBLIOTECA DE FOTOS E MÚSICAS"):
+--
+--         let SUPABASE_URL = "";
+--         let SUPABASE_CHAVE = "";
+--
+--     Cole os valores entre as aspas:
+--
+--         let SUPABASE_URL = "https://xxxxxxxx.supabase.co";
+--         let SUPABASE_CHAVE = "eyJhbGciOi...";
+--
+--  5. Publique o index.html (GitHub Pages, Netlify, Vercel...).
+--     Pronto: qualquer pessoa que abrir o site pode adicionar,
+--     trocar e remover fotos e músicas direto pelo painel.
+--
+--  IMPORTANTE (segurança)
+--  Como o site não tem login, qualquer pessoa que tiver o endereço
+--  do site consegue editar as mídias. É o preço de não ter senha.
+--  Se um dia isso incomodar, dá para adicionar login depois.
+--
+--  LIMITES DO PLANO GRATUITO
+--  - 1 GB de arquivos no Storage (sobra bastante para fotos de 2–3 MB)
+--  - 500 MB de banco (aqui só guardamos a listinha, é minúscula)
+--  - Se o projeto ficar 7 dias sem nenhum acesso, o Supabase pausa
+--    o projeto. Basta entrar no painel e clicar em "Restore".
+-- ============================================================
+
+
+-- ------------------------------------------------------------
+-- 1. Bucket "midias" (público para leitura)
+-- ------------------------------------------------------------
+insert into storage.buckets (id, name, public)
+values ('midias', 'midias', true)
+on conflict (id) do update set public = true;
+
+
+-- ------------------------------------------------------------
+-- 2. Tabela "biblioteca" — sempre a linha id = 1
+--    dados = { atualizadoEm, fotos: [...], musicas: [...] }
+-- ------------------------------------------------------------
+create table if not exists public.biblioteca (
+    id            integer primary key,
+    dados         jsonb   not null default '{}'::jsonb,
+    atualizado_em timestamptz not null default now()
+);
+
+alter table public.biblioteca enable row level security;
+
+-- Leitura aberta (o site precisa mostrar a lista para todo mundo)
+drop policy if exists "biblioteca_leitura" on public.biblioteca;
+create policy "biblioteca_leitura"
+    on public.biblioteca
+    for select
+    to anon, authenticated
+    using (true);
+
+-- Criação da linha (primeiro acesso)
+drop policy if exists "biblioteca_criar" on public.biblioteca;
+create policy "biblioteca_criar"
+    on public.biblioteca
+    for insert
+    to anon, authenticated
+    with check (true);
+
+-- Alteração da lista
+drop policy if exists "biblioteca_alterar" on public.biblioteca;
+create policy "biblioteca_alterar"
+    on public.biblioteca
+    for update
+    to anon, authenticated
+    using (true)
+    with check (true);
+
+
+-- ------------------------------------------------------------
+-- 3. Permissões do bucket "midias" (enviar / trocar / apagar)
+-- ------------------------------------------------------------
+drop policy if exists "midias_leitura" on storage.objects;
+create policy "midias_leitura"
+    on storage.objects
+    for select
+    to anon, authenticated
+    using (bucket_id = 'midias');
+
+drop policy if exists "midias_enviar" on storage.objects;
+create policy "midias_enviar"
+    on storage.objects
+    for insert
+    to anon, authenticated
+    with check (bucket_id = 'midias');
+
+drop policy if exists "midias_atualizar" on storage.objects;
+create policy "midias_atualizar"
+    on storage.objects
+    for update
+    to anon, authenticated
+    using (bucket_id = 'midias')
+    with check (bucket_id = 'midias');
+
+drop policy if exists "midias_apagar" on storage.objects;
+create policy "midias_apagar"
+    on storage.objects
+    for delete
+    to anon, authenticated
+    using (bucket_id = 'midias');
+
+
+-- ------------------------------------------------------------
+-- 4. Tabela "mensagens" — recadinhos entre vocês dois
+--    para = 'arthur' ou 'rayane' (quem vai receber)
+-- ------------------------------------------------------------
+create table if not exists public.mensagens (
+    id        bigint generated by default as identity primary key,
+    para      text not null check (para in ('arthur', 'rayane')),
+    texto     text not null check (char_length(texto) between 1 and 1000),
+    criado_em timestamptz not null default now()
+);
+
+create index if not exists mensagens_para_data
+    on public.mensagens (para, criado_em desc);
+
+alter table public.mensagens enable row level security;
+
+drop policy if exists "mensagens_leitura" on public.mensagens;
+create policy "mensagens_leitura"
+    on public.mensagens
+    for select
+    to anon, authenticated
+    using (true);
+
+drop policy if exists "mensagens_escrever" on public.mensagens;
+create policy "mensagens_escrever"
+    on public.mensagens
+    for insert
+    to anon, authenticated
+    with check (true);
+
+drop policy if exists "mensagens_apagar" on public.mensagens;
+create policy "mensagens_apagar"
+    on public.mensagens
+    for delete
+    to anon, authenticated
+    using (true);
+
+
+-- ------------------------------------------------------------
+-- 5. (Opcional) Já deixa a lista inicial salva, com as 25 fotos
+--    e a música que estão no site. Se preferir, pule este trecho:
+--    o site cria essa lista sozinho no primeiro salvamento.
+-- ------------------------------------------------------------
+insert into public.biblioteca (id, dados)
+values (
+    1,
+    jsonb_build_object(
+        'atualizadoEm', now(),
+        'fotos', (select jsonb_agg(jsonb_build_object(
+                    'arquivo', 'fotos/foto' || n || ext,
+                    'nome', 'foto' || n || ext,
+                    'origem', 'site'
+                 ) order by n)
+                  from (values
+                        (1,'.jpg'),(2,'.jpg'),(3,'.jpeg'),(4,'.jpg'),(5,'.jpg'),
+                        (6,'.jpeg'),(7,'.jpeg'),(8,'.jpeg'),(9,'.jpg'),(10,'.jpg'),
+                        (11,'.jpg'),(12,'.jpg'),(13,'.jpeg'),(14,'.jpg'),(15,'.jpg'),
+                        (16,'.jpg'),(17,'.jpeg'),(18,'.jpeg'),(19,'.jpeg'),(20,'.jpg'),
+                        (21,'.jpg'),(22,'.jpg'),(23,'.jpeg'),(24,'.jpg'),(25,'.jpg')
+                  ) as t(n, ext)),
+        'musicas', jsonb_build_array(jsonb_build_object(
+                    'arquivo', 'musica.mp3',
+                    'nome', 'musica.mp3',
+                    'origem', 'site'
+                 ))
+    )
+)
+on conflict (id) do nothing;

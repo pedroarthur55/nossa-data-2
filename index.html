@@ -1,0 +1,2621 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Eu e Você 💘</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(to right, #ffeaf4, #ffeef2);
+            color: #d6336c;
+            text-align: center;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            color: #ff4d88;
+            margin-bottom: 10px;
+        }
+
+        #texto-contador {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #ff4d88;
+        }
+
+        #contador {
+            font-size: 1.3rem;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: #d6336c;
+            font-weight: 600;
+        }
+
+        /* Estilo para cada bloco de tempo */
+        .tempo-bloco {
+            min-width: 60px;
+            padding: 5px 10px;
+            border-radius: 12px;
+            background: #ffe0ef;
+            box-shadow: 0 2px 6px rgba(255, 77, 136, 0.3);
+            position: relative;
+            font-size: 1.3rem;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Animação quando o número atualiza */
+        .atualizado {
+            animation: piscar-numero 0.5s ease forwards;
+            background-color: #ff4d88;
+            color: white;
+            box-shadow: 0 0 12px #ff4d88;
+        }
+
+        @keyframes piscar-numero {
+            0% {
+                background-color: #ff4d88;
+                color: white;
+                box-shadow: 0 0 12px #ff4d88;
+            }
+
+            100% {
+                background-color: #ffe0ef;
+                color: #d6336c;
+                box-shadow: 0 2px 6px rgba(255, 77, 136, 0.3);
+            }
+        }
+
+        /* Restante do seu CSS (carousel, modal, etc) permanece igual */
+        .carousel-container {
+            width: 320px;
+            margin: 30px auto 10px auto;
+            text-align: left;
+            position: relative;
+        }
+
+        .carousel {
+            position: relative;
+            width: 292px;
+            height: 523px;
+            background: #fff0f6;
+            padding: 1rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0;
+            overflow: visible;
+        }
+
+        .carousel img {
+            position: absolute;
+            border-radius: 15px;
+            border: 2px solid #ffb3c6;
+            object-fit: cover;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #fotoAtual {
+            width: 300px;
+            height: 460px;
+            top: 20px;
+            left: 10px;
+            z-index: 10;
+            transform: scale(1);
+            border-color: #ff4d88;
+            box-shadow: 0 8px 20px rgba(255, 77, 136, 0.6);
+            cursor: default;
+        }
+
+        .foto-pilha {
+            width: 220px;
+            height: 260px;
+            top: 60px;
+            opacity: 0.7;
+            filter: blur(1px);
+            border-color: #ffb3c6;
+            box-shadow: none;
+            cursor: default;
+        }
+
+        #fotoAnterior {
+            left: -80px;
+            transform: rotate(-15deg) scale(0.85);
+            z-index: 5;
+        }
+
+        #fotoProxima {
+            left: 210px;
+            transform: rotate(15deg) scale(0.85);
+            z-index: 5;
+        }
+
+        .carousel-buttons {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 480px;
+            z-index: 20;
+        }
+
+        .carousel-buttons button {
+            background-color: #ff99bb;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .carousel-buttons button:hover {
+            background-color: #ff66a3;
+            transform: scale(1.1);
+        }
+
+        /* Botões inferiores: Curtir e Descrição */
+        .botoes-inferiores {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+            gap: 10px;
+        }
+
+        #curtirBtn {
+            font-size: 1rem;
+            padding: 8px 16px;
+            background: #ffaacc;
+            border: none;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #curtirBtn:hover {
+            background: #ff3366;
+            transform: scale(1.1);
+        }
+
+        #descricaoBtn {
+            background: #ffaacc;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #descricaoBtn:hover {
+            background: #ff88bb;
+            transform: scale(1.1);
+        }
+
+        /* Player de música centralizado */
+        #musica {
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== Gerenciamento de fotos e músicas ===== */
+        #btnGerenciar {
+            margin-top: 18px;
+            padding: 10px 20px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #ff4d88;
+            background: #fff0f6;
+            border: 2px dashed #ffb3c6;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #btnGerenciar:hover {
+            background: #ffe0ef;
+            transform: translateY(-2px);
+        }
+
+        .lista-musicas-app {
+            display: none;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .musica-pill {
+            max-width: 220px;
+            padding: 7px 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #d6336c;
+            background: #fff;
+            border: 1px solid #ffb3c6;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .musica-pill.tocando {
+            background: #ff4d88;
+            color: #fff;
+            border-color: #ff4d88;
+        }
+
+        .aviso-sem-fotos {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #d6336c;
+        }
+
+        .aviso-sem-fotos button {
+            padding: 9px 18px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            color: #fff;
+            background: #ff99bb;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        /* Painel de gerenciamento */
+        #modalGerenciar {
+            position: fixed;
+            inset: 0;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1300;
+        }
+
+        #painelGerenciar {
+            display: flex;
+            flex-direction: column;
+            width: min(680px, 100%);
+            max-height: 92vh;
+            background: #fff7fa;
+            border-radius: 20px;
+            overflow: hidden;
+            text-align: left;
+            box-shadow: 0 20px 50px rgba(214, 51, 108, 0.4);
+        }
+
+        .painel-topo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            background: linear-gradient(to right, #ffd6e7, #ffe9f2);
+        }
+
+        .painel-topo h2 {
+            margin: 0;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            color: #ff4d88;
+        }
+
+        .painel-fechar {
+            font-size: 1.4rem;
+            line-height: 1;
+            color: #d6336c;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .painel-abas {
+            display: flex;
+            gap: 8px;
+            padding: 12px 18px 0;
+        }
+
+        .aba {
+            flex: 1;
+            padding: 10px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #d6336c;
+            background: #ffe0ef;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .aba.ativa {
+            color: #fff;
+            background: #ff4d88;
+        }
+
+        .painel-corpo {
+            padding: 14px 18px 20px;
+            overflow-y: auto;
+        }
+
+        .status-nuvem {
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            font-size: 0.82rem;
+            line-height: 1.45;
+            border-radius: 10px;
+        }
+
+        .status-nuvem.conectado {
+            color: #0f5132;
+            background: #d8f3e4;
+        }
+
+        .status-nuvem.desconectado {
+            color: #7a3f16;
+            background: #fff3cd;
+        }
+
+        .dica {
+            margin: 0 0 10px;
+            padding: 10px 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #a05a74;
+            background: #fff;
+            border-left: 4px solid #ffb3c6;
+            border-radius: 10px;
+        }
+
+        .contador-midia {
+            margin: 0 0 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #d6336c;
+        }
+
+        .linha-contador {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .linha-contador .contador-midia {
+            margin: 0;
+        }
+
+        .botao-limpar {
+            padding: 6px 12px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #d6336c;
+            background: #fff;
+            border: 1px solid #ffb3c6;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .botao-restaurar {
+            width: 100%;
+            margin-top: 8px;
+            padding: 8px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #a05a74;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .grade-fotos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+            gap: 10px;
+        }
+
+        .grade-fotos.arrastando {
+            outline: 2px dashed #ff4d88;
+            outline-offset: 4px;
+            border-radius: 14px;
+        }
+
+        .item-foto {
+            position: relative;
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
+            background: #ffe0ef;
+            border-radius: 12px;
+            box-shadow: inset 0 0 0 2px #ffb3c6;
+        }
+
+        .item-foto img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-foto .indice {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            padding: 2px 7px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #fff;
+            background: rgba(255, 77, 136, 0.9);
+            border-radius: 20px;
+        }
+
+        .item-foto .acoes {
+            position: absolute;
+            inset: auto 0 0 0;
+            display: flex;
+            gap: 4px;
+            padding: 5px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
+        }
+
+        .acoes button {
+            flex: 1;
+            padding: 6px 4px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #d6336c;
+            background: rgba(255, 255, 255, 0.94);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .acoes button:hover {
+            background: #fff;
+        }
+
+        .acoes .btn-remover {
+            flex: 0 0 auto;
+            opacity: 0.9;
+        }
+
+        .botao-adicionar {
+            display: block;
+            width: 100%;
+            margin-top: 14px;
+            padding: 12px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ff4d88;
+            background: #fff;
+            border: 2px dashed #ff99bb;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .botao-adicionar:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .lista-musicas {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .item-musica {
+            padding: 10px 12px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(255, 77, 136, 0.15);
+        }
+
+        .item-musica .nome {
+            display: block;
+            margin-bottom: 8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #d6336c;
+        }
+
+        .item-musica audio {
+            width: 100%;
+            height: 34px;
+        }
+
+        .item-musica .acoes {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .item-musica .acoes button {
+            flex: 1;
+            padding: 7px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #d6336c;
+            background: #ffe0ef;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .botao-exportar {
+            width: 100%;
+            margin-top: 18px;
+            padding: 11px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #fff;
+            background: #ff85a2;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .botao-exportar:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .nota-exportar {
+            margin: 8px 0 0;
+            font-size: 0.75rem;
+            color: #a05a74;
+            text-align: center;
+        }
+
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            z-index: 2000;
+            max-width: 90vw;
+            padding: 11px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
+            background: #d6336c;
+            border-radius: 50px;
+            box-shadow: 0 8px 20px rgba(214, 51, 108, 0.4);
+            opacity: 0;
+            transform: translate(-50%, 12px);
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        #toast.visivel {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        /* Modal principal (Curtir) */
+        #modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        /* Modal para descrição */
+        #modalDescricao {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        #modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        #modal-content button {
+            margin-top: 1rem;
+            padding: 10px 20px;
+            background: #ff85a2;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Modal Sobre Nós (abas + mensagens) */
+        .caixa-sobre {
+            display: flex;
+            flex-direction: column;
+            width: min(560px, 92vw);
+            max-height: 88vh;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(214, 51, 108, 0.28);
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .sobre-topo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #ffe0ef, #fff2f7);
+        }
+
+        .sobre-topo h2 {
+            margin: 0;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: #d6336c;
+        }
+
+        .sobre-fechar {
+            width: 32px;
+            height: 32px;
+            font-size: 0.95rem;
+            color: #d6336c;
+            background: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .sobre-abas {
+            display: flex;
+            gap: 6px;
+            padding: 10px 12px 0;
+            background: #fff;
+        }
+
+        .sobre-aba {
+            flex: 1;
+            padding: 9px 6px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #d6336c;
+            background: #ffeef5;
+            border: none;
+            border-radius: 12px 12px 0 0;
+            cursor: pointer;
+        }
+
+        .sobre-aba.ativa {
+            color: #fff;
+            background: #ff4d88;
+        }
+
+        .sobre-corpo {
+            padding: 14px 16px 18px;
+            overflow-y: auto;
+            background: #fff;
+            border-top: 2px solid #ff4d88;
+        }
+
+        .sobre-texto {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #7a3f52;
+        }
+
+        .sobre-dica {
+            margin: 0 0 10px;
+            padding: 9px 11px;
+            font-size: 0.79rem;
+            line-height: 1.45;
+            color: #a05a74;
+            background: #fff5f9;
+            border-left: 3px solid #ffb3c6;
+            border-radius: 8px;
+        }
+
+        .aviso-mensagens {
+            margin-bottom: 10px;
+            padding: 8px 10px;
+            font-size: 0.78rem;
+            line-height: 1.4;
+            color: #7a3f16;
+            background: #fff3cd;
+            border-radius: 8px;
+        }
+
+        .form-mensagem {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .form-mensagem textarea {
+            width: 100%;
+            min-height: 76px;
+            max-height: 160px;
+            padding: 10px 12px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.45;
+            color: #7a3f52;
+            background: #fffafc;
+            border: 1px solid #ffc2d6;
+            border-radius: 12px;
+            outline: none;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        .form-mensagem textarea:focus {
+            border-color: #ff4d88;
+            box-shadow: 0 0 0 3px rgba(255, 77, 136, 0.15);
+        }
+
+        .botao-enviar-mensagem {
+            align-self: flex-end;
+            padding: 9px 20px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.86rem;
+            font-weight: 700;
+            color: #fff;
+            background: #ff4d88;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .botao-enviar-mensagem:disabled {
+            opacity: 0.55;
+            cursor: default;
+        }
+
+        .lista-mensagens {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mensagem-item {
+            position: relative;
+            padding: 10px 34px 10px 12px;
+            background: #fff5f9;
+            border: 1px solid #ffe0ef;
+            border-radius: 12px;
+        }
+
+        .mensagem-item p {
+            margin: 0 0 6px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: #7a3f52;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .mensagem-item time {
+            font-size: 0.72rem;
+            color: #b07a8f;
+        }
+
+        .mensagem-apagar {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 26px;
+            height: 26px;
+            padding: 0;
+            font-size: 0.8rem;
+            line-height: 1;
+            color: #d6336c;
+            background: #ffe0ef;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .mensagens-vazio {
+            margin: 0;
+            padding: 16px 0;
+            font-size: 0.85rem;
+            color: #b07a8f;
+            text-align: center;
+        }
+
+        .heart {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center/contain;
+            animation: float 6s linear infinite;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Tela de Abertura */
+        #telaAbertura {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffc1cc, #ffeaf4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        #botaoSurpresa {
+            padding: 20px 40px;
+            font-size: 1.8rem;
+            background-color: #ff4d88;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            transition: transform 0.3s ease;
+        }
+
+        #botaoSurpresa:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            #texto-contador {
+                font-size: 1.2rem;
+            }
+
+            #contador {
+                font-size: 1rem;
+            }
+
+            .carousel-container {
+                width: 280px;
+            }
+
+            .carousel {
+                width: 253px;
+                height: 488px;
+            }
+
+            #fotoAtual {
+                width: 260px;
+                height: 429px;
+                top: 20px;
+                left: 10px;
+            }
+
+            .foto-pilha {
+                width: 180px;
+                height: 220px;
+                top: 50px;
+            }
+
+            #fotoAnterior {
+                left: -60px;
+                transform: rotate(-15deg) scale(0.85);
+            }
+
+            #fotoProxima {
+                left: 180px;
+                transform: rotate(15deg) scale(0.85);
+            }
+
+            .carousel-buttons {
+                margin-top: 447px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Tela de Abertura -->
+    <div id="telaAbertura">
+        <button id="botaoSurpresa">🎁 Surpresa 🎁</button>
+    </div>
+
+    <!-- Conteúdo Principal (inicialmente oculto) -->
+    <div id="conteudoPrincipal" style="display: none;">
+        <!-- Modal principal (Curtir) -->
+        <div id="modal">
+            <div id="modal-content">
+                <h2>✨ Oi, meu amor! ✨</h2>
+                <p>Quero que saiba o quanto você é especial pra mim 💖</p>
+                <button onclick="fecharModal()">Fechar</button>
+            </div>
+        </div>
+
+        <!-- Modal para Descrição / Mensagens -->
+        <div id="modalDescricao">
+            <div class="caixa-sobre" role="dialog" aria-modal="true" aria-label="Sobre nós e mensagens">
+                <div class="sobre-topo">
+                    <h2>💞 Sobre Nós</h2>
+                    <button type="button" class="sobre-fechar" onclick="fecharDescricao()"
+                        aria-label="Fechar">✕</button>
+                </div>
+
+                <div class="sobre-abas">
+                    <button type="button" class="sobre-aba ativa" data-sobre-aba="historia"
+                        onclick="trocarAbaSobre('historia')">💞 História</button>
+                    <button type="button" class="sobre-aba" data-sobre-aba="arthur"
+                        onclick="trocarAbaSobre('arthur')">💌 Para o Arthur</button>
+                    <button type="button" class="sobre-aba" data-sobre-aba="rayane"
+                        onclick="trocarAbaSobre('rayane')">💌 Para a Rayane</button>
+                </div>
+
+                <div class="sobre-corpo">
+                    <div id="abaSobreHistoria">
+                        <p class="sobre-texto">Queria agradecer por ser essa mulher e mãe incrível que cuida de mim e
+                            da Luna. Obrigado pelos melhores momentos, carinhos e risadas. Sou muito feliz ao seu lado,
+                            Te amo !!! 💕</p>
+                    </div>
+
+                    <div id="abaSobreArthur" style="display: none;">
+                        <p class="sobre-dica">Recadinhos para o Arthur: é aqui que ele lê o que você escreveu. As
+                            mensagens ficam salvas para sempre 💖</p>
+                        <div class="aviso-mensagens" style="display: none;"></div>
+                        <form class="form-mensagem" onsubmit="enviarMensagemDoForm(event, 'arthur'); return false;">
+                            <textarea id="textoMensagemArthur" maxlength="1000" rows="3"
+                                placeholder="Escreva uma mensagem para o Arthur..."></textarea>
+                            <button type="submit" class="botao-enviar-mensagem">Enviar 💌</button>
+                        </form>
+                        <div id="listaMensagensArthur" class="lista-mensagens"></div>
+                    </div>
+
+                    <div id="abaSobreRayane" style="display: none;">
+                        <p class="sobre-dica">Recadinhos para a Rayane: é aqui que ela lê o que você escreveu. As
+                            mensagens ficam salvas para sempre 💖</p>
+                        <div class="aviso-mensagens" style="display: none;"></div>
+                        <form class="form-mensagem" onsubmit="enviarMensagemDoForm(event, 'rayane'); return false;">
+                            <textarea id="textoMensagemRayane" maxlength="1000" rows="3"
+                                placeholder="Escreva uma mensagem para a Rayane..."></textarea>
+                            <button type="submit" class="botao-enviar-mensagem">Enviar 💌</button>
+                        </form>
+                        <div id="listaMensagensRayane" class="lista-mensagens"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h1>💖 Eu e Você 💖</h1>
+
+        <div id="texto-contador">Estamos juntos há</div>
+        <div id="contador">
+            <!-- Aqui os blocos de tempo vão aparecer -->
+        </div>
+
+        <div class="carousel-container">
+            <div class="carousel">
+                <img id="fotoAnterior" class="foto-pilha" src="fotos/foto3.jpeg" alt="Foto anterior">
+                <img id="fotoAtual" src="fotos/foto1.jpg" alt="Foto atual">
+                <img id="fotoProxima" class="foto-pilha" src="fotos/foto2.jpg" alt="Foto próxima">
+                <div id="avisoSemFotos" class="aviso-sem-fotos">
+                    <span>Nenhuma foto por aqui 💔</span>
+                    <button type="button" onclick="irParaAdicionarFotos()">Adicionar fotos</button>
+                </div>
+                <div class="carousel-buttons">
+                    <button onclick="anterior()">⟨</button>
+                    <button onclick="proxima()">⟩</button>
+                </div>
+            </div>
+
+            <!-- Botões inferiores reposicionados -->
+            <div class="botoes-inferiores">
+                <button id="curtirBtn" onclick="mostrarModal()">❤️ Curtir</button>
+                <button id="descricaoBtn" onclick="mostrarDescricao()">💞 Sobre Nós</button>
+            </div>
+        </div>
+
+        <!-- Player de Música centralizado abaixo da foto principal -->
+        <audio id="musica" controls preload="auto"></audio>
+        <div id="listaMusicasApp" class="lista-musicas-app"></div>
+
+        <!-- Abre o painel de gerenciamento -->
+        <button id="btnGerenciar" type="button" onclick="abrirGerenciar()">⚙️ Gerenciar fotos e músicas</button>
+
+        <!-- Painel de gerenciamento -->
+        <div id="modalGerenciar">
+            <div id="painelGerenciar" role="dialog" aria-modal="true" aria-label="Gerenciar fotos e músicas">
+                <div class="painel-topo">
+                    <h2>Nossas mídias</h2>
+                    <button type="button" class="painel-fechar" onclick="fecharGerenciar()"
+                        aria-label="Fechar">✕</button>
+                </div>
+
+                <div class="painel-abas">
+                    <button type="button" class="aba ativa" data-aba="fotos"
+                        onclick="trocarAba('fotos')">📷 Fotos</button>
+                    <button type="button" class="aba" data-aba="musicas"
+                        onclick="trocarAba('musicas')">🎵 Músicas</button>
+                </div>
+
+                <div class="painel-corpo">
+                    <div id="statusNuvem" class="status-nuvem"></div>
+
+                    <div id="abaFotos">
+                        <p class="dica">Toque em <strong>Trocar</strong> para substituir uma foto, no 🗑 para remover,
+                            ou adicione novas (até 25). Você também pode arrastar imagens para a grade.</p>
+                        <div class="linha-contador">
+                            <p class="contador-midia" id="contadorFotos"></p>
+                            <button type="button" class="botao-limpar" id="btnLimparFotos"
+                                onclick="limparFotos()">🧹 Remover todas</button>
+                        </div>
+                        <div class="grade-fotos" id="gradeFotos"></div>
+                        <button type="button" class="botao-adicionar" id="btnAddFotos"
+                            onclick="document.getElementById('inputAddFotos').click()">➕ Adicionar fotos</button>
+                        <button type="button" class="botao-restaurar" id="btnRestaurarFotos"
+                            onclick="restaurarFotos()">↺ Restaurar as 25 fotos originais</button>
+                    </div>
+
+                    <div id="abaMusicas" style="display: none;">
+                        <p class="dica">Você pode ter até 3 músicas. Toque em <strong>Trocar</strong> para substituir
+                            uma música ou no 🗑 para remover.</p>
+                        <div class="linha-contador">
+                            <p class="contador-midia" id="contadorMusicas"></p>
+                            <button type="button" class="botao-limpar" id="btnLimparMusicas"
+                                onclick="limparMusicas()">🧹 Remover todas</button>
+                        </div>
+                        <div class="lista-musicas" id="listaMusicas"></div>
+                        <button type="button" class="botao-adicionar" id="btnAddMusicas"
+                            onclick="document.getElementById('inputAddMusicas').click()">➕ Adicionar música</button>
+                    </div>
+
+                    <button type="button" class="botao-exportar" id="btnExportar"
+                        onclick="exportarBackup()">⬇️ Exportar backup (.zip)</button>
+                    <p class="nota-exportar">Baixa as fotos e músicas exatamente como estão no site agora.</p>
+
+                    <input type="file" id="inputAddFotos" accept="image/*" multiple hidden>
+                    <input type="file" id="inputAddMusicas" accept="audio/*" multiple hidden>
+                    <input type="file" id="inputTrocarFoto" accept="image/*" hidden>
+                    <input type="file" id="inputTrocarMusica" accept="audio/*" hidden>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dataInicio = new Date("2023-11-12T00:00:00");
+
+        // Função para calcular diferença entre datas em anos, meses, dias, horas, minutos e segundos
+        function diferencaDatas(inicio, fim) {
+            let anos = fim.getFullYear() - inicio.getFullYear();
+            let meses = fim.getMonth() - inicio.getMonth();
+            let dias = fim.getDate() - inicio.getDate();
+            let horas = fim.getHours() - inicio.getHours();
+            let minutos = fim.getMinutes() - inicio.getMinutes();
+            let segundos = fim.getSeconds() - inicio.getSeconds();
+
+            if (segundos < 0) {
+                segundos += 60;
+                minutos--;
+            }
+            if (minutos < 0) {
+                minutos += 60;
+                horas--;
+            }
+            if (horas < 0) {
+                horas += 24;
+                dias--;
+            }
+            if (dias < 0) {
+                const mesAnterior = new Date(fim.getFullYear(), fim.getMonth(), 0);
+                dias += mesAnterior.getDate();
+                meses--;
+            }
+            if (meses < 0) {
+                meses += 12;
+                anos--;
+            }
+
+            return { anos, meses, dias, horas, minutos, segundos };
+        }
+
+        // Cria os blocos de tempo para mostrar no contador
+        const contadorDiv = document.getElementById("contador");
+
+        const blocosTempo = [
+            { id: "anos", labelSingular: "ano", labelPlural: "anos", valor: 0 },
+            { id: "meses", labelSingular: "mês", labelPlural: "meses", valor: 0 },
+            { id: "dias", labelSingular: "dia", labelPlural: "dias", valor: 0 },
+            { id: "horas", labelSingular: "h", labelPlural: "h", valor: 0 },
+            { id: "minutos", labelSingular: "min", labelPlural: "min", valor: 0 },
+            { id: "segundos", labelSingular: "s", labelPlural: "s", valor: 0 }
+        ];
+
+        // Inicializa o HTML dos blocos no contador
+        function inicializarBlocos() {
+            contadorDiv.innerHTML = "";
+            blocosTempo.forEach(bloco => {
+                const span = document.createElement("span");
+                span.id = bloco.id;
+                span.className = "tempo-bloco";
+                span.textContent = "0 " + bloco.labelPlural;
+                contadorDiv.appendChild(span);
+            });
+        }
+
+        // Atualiza os blocos individualmente com animação se o valor mudou
+        function atualizarBlocos(diff) {
+            blocosTempo.forEach(bloco => {
+                let novoValor;
+                switch (bloco.id) {
+                    case "anos":
+                        novoValor = diff.anos;
+                        break;
+                    case "meses":
+                        novoValor = diff.meses;
+                        break;
+                    case "dias":
+                        novoValor = diff.dias;
+                        break;
+                    case "horas":
+                        novoValor = diff.horas;
+                        break;
+                    case "minutos":
+                        novoValor = diff.minutos;
+                        break;
+                    case "segundos":
+                        novoValor = diff.segundos;
+                        break;
+                }
+                if (bloco.valor !== novoValor) {
+                    bloco.valor = novoValor;
+                    const span = document.getElementById(bloco.id);
+                    const label = (novoValor === 1) ? bloco.labelSingular : bloco.labelPlural;
+                    span.textContent = novoValor + " " + label;
+
+                    // Adiciona a classe de animação
+                    span.classList.add("atualizado");
+                    // Remove a classe após a animação
+                    setTimeout(() => {
+                        span.classList.remove("atualizado");
+                    }, 500);
+                }
+            });
+        }
+
+        function atualizarContador() {
+            const agora = new Date();
+            const diff = diferencaDatas(dataInicio, agora);
+            atualizarBlocos(diff);
+        }
+
+        inicializarBlocos();
+        atualizarContador();
+        setInterval(atualizarContador, 1000);
+
+        /* ============================================================
+           BIBLIOTECA DE FOTOS E MÚSICAS (Supabase)
+           As fotos e músicas ficam no Storage e a lista de quais
+           aparecem fica na tabela "biblioteca". Todo mundo que abrir
+           o site vê igual, e qualquer pessoa pode editar pelo app.
+           ============================================================ */
+
+        /* >>> PREENCHA COM OS DADOS DO SEU PROJETO SUPABASE <<<
+           Supabase → Project Settings → API:
+             - Project URL
+             - anon public (a chave longa que começa com "eyJ") */
+        let SUPABASE_URL = "https://gvabxxyllmbupigurfdg.supabase.co";
+        let SUPABASE_CHAVE = "sb_publishable_cC7J9zXM4ipt2LZ2TyfOMA_WvG2BKTO";
+
+        const BUCKET = "midias";         // nome do bucket (storage)
+        const TABELA = "biblioteca";     // tabela que guarda a lista
+        const LINHA_ID = 1;              // sempre a mesma linha
+
+        const MAX_FOTOS = 25;
+        const MAX_MUSICAS = 3;
+        const LIMITE_ARQUIVO = 20 * 1024 * 1024; // 20 MB por arquivo
+        const CACHE_CHAVE = "nossa-data-biblioteca";
+
+        const FOTOS_PADRAO = [
+            "fotos/foto1.jpg",
+            "fotos/foto2.jpg",
+            "fotos/foto3.jpeg",
+            "fotos/foto4.jpg",
+            "fotos/foto5.jpg",
+            "fotos/foto6.jpeg",
+            "fotos/foto7.jpeg",
+            "fotos/foto8.jpeg",
+            "fotos/foto9.jpg",
+            "fotos/foto10.jpg",
+            "fotos/foto11.jpg",
+            "fotos/foto12.jpg",
+            "fotos/foto13.jpg",
+            "fotos/foto14.jpg",
+            "fotos/foto15.jpg",
+            "fotos/foto16.jpg",
+            "fotos/foto17.jpeg",
+            "fotos/foto18.jpeg",
+            "fotos/foto19.jpeg",
+            "fotos/foto20.jpg",
+            "fotos/foto21.jpg",
+            "fotos/foto22.jpg",
+            "fotos/foto23.jpeg",
+            "fotos/foto24.jpg",
+            "fotos/foto25.jpg"
+        ];
+        const MUSICA_PADRAO = "musica.mp3";
+
+        // --- Estados ---
+        let fotos = [];          // [{ arquivo, nome, origem: "site" | "storage" }]
+        let musicas = [];
+        let fotosSrc = [];
+        let musicasSrc = [];
+        let fotoIndex = 0;
+        let musicaIndex = 0;
+        let indiceTrocaFoto = null;
+        let indiceTrocaMusica = null;
+        let enviando = false;
+        let nuvemIndisponivel = false;
+
+        // --- Utilidades ---
+        function novoId(prefixo) {
+            if (window.crypto && typeof crypto.randomUUID === "function") {
+                return prefixo + "-" + crypto.randomUUID();
+            }
+            return prefixo + "-" + Date.now() + "-" + Math.random().toString(16).slice(2);
+        }
+
+        function extensaoDe(tipo, nome) {
+            const mapa = {
+                "image/jpeg": "jpg", "image/jpg": "jpg", "image/png": "png",
+                "image/webp": "webp", "image/gif": "gif",
+                "audio/mpeg": "mp3", "audio/mp3": "mp3", "audio/ogg": "ogg",
+                "audio/wav": "wav", "audio/x-wav": "wav", "audio/mp4": "m4a",
+                "audio/aac": "aac"
+            };
+            if (tipo && mapa[tipo.toLowerCase()]) return mapa[tipo.toLowerCase()];
+            const doNome = (nome || "").split(".").pop();
+            return (doNome && doNome.length <= 4) ? doNome.toLowerCase() : "bin";
+        }
+
+        function baseNome(caminho) {
+            return (caminho || "").split("/").pop();
+        }
+
+        function caminhoDeArquivo(pasta, arquivo) {
+            return pasta + "/" + novoId("midia") + "." + extensaoDe(arquivo.type, arquivo.name);
+        }
+
+        function avisar(mensagem, duracao) {
+            let toast = document.getElementById("toast");
+            if (!toast) {
+                toast = document.createElement("div");
+                toast.id = "toast";
+                document.body.appendChild(toast);
+            }
+            toast.textContent = mensagem;
+            toast.classList.add("visivel");
+            clearTimeout(toast.timer);
+            toast.timer = setTimeout(() => toast.classList.remove("visivel"), duracao || 2600);
+        }
+
+        function nuvemConfigurada() {
+            return /^https?:\/\//.test(SUPABASE_URL) && SUPABASE_CHAVE.length > 20;
+        }
+
+        /* ---------- Supabase (REST + Storage, sem SDK) ---------- */
+        function cabecalhosNuvem(extras) {
+            return Object.assign({
+                "apikey": SUPABASE_CHAVE,
+                "Authorization": "Bearer " + SUPABASE_CHAVE
+            }, extras || {});
+        }
+
+        async function textoErro(resposta) {
+            try {
+                const corpo = await resposta.json();
+                return corpo.message || corpo.error || ("HTTP " + resposta.status);
+            } catch (erro) {
+                return "HTTP " + resposta.status;
+            }
+        }
+
+        async function lerBibliotecaNuvem() {
+            const resposta = await fetch(
+                SUPABASE_URL + "/rest/v1/" + TABELA + "?id=eq." + LINHA_ID + "&select=dados",
+                { headers: cabecalhosNuvem({ "Accept": "application/json" }) }
+            );
+            if (!resposta.ok) throw new Error(await textoErro(resposta));
+            const linhas = await resposta.json();
+            return (linhas.length && linhas[0].dados) ? linhas[0].dados : null;
+        }
+
+        async function gravarBibliotecaNuvem(dados) {
+            const resposta = await fetch(SUPABASE_URL + "/rest/v1/" + TABELA + "?on_conflict=id", {
+                method: "POST",
+                headers: cabecalhosNuvem({
+                    "Content-Type": "application/json",
+                    "Prefer": "resolution=merge-duplicates,return=minimal"
+                }),
+                body: JSON.stringify({ id: LINHA_ID, dados: dados, atualizado_em: new Date().toISOString() })
+            });
+            if (!resposta.ok) throw new Error(await textoErro(resposta));
+        }
+
+        async function enviarArquivoNuvem(caminho, arquivo) {
+            const resposta = await fetch(
+                SUPABASE_URL + "/storage/v1/object/" + BUCKET + "/" + caminho.split("/").map(encodeURIComponent).join("/"),
+                {
+                    method: "POST",
+                    headers: cabecalhosNuvem({
+                        "Content-Type": arquivo.type || "application/octet-stream",
+                        "x-upsert": "true",
+                        "cache-control": "3600"
+                    }),
+                    body: arquivo
+                }
+            );
+            if (!resposta.ok) throw new Error(await textoErro(resposta));
+        }
+
+        async function removerArquivosNuvem(caminhos) {
+            if (!caminhos || !caminhos.length) return;
+            try {
+                await fetch(SUPABASE_URL + "/storage/v1/object/" + BUCKET, {
+                    method: "DELETE",
+                    headers: cabecalhosNuvem({ "Content-Type": "application/json" }),
+                    body: JSON.stringify({ prefixes: caminhos })
+                });
+            } catch (erro) {
+                console.warn("Não foi possível apagar os arquivos antigos:", erro);
+            }
+        }
+
+        function urlDoArquivo(item) {
+            if (!item || !item.arquivo) return "";
+            if (/^https?:\/\//i.test(item.arquivo)) return item.arquivo;
+            if (item.origem === "storage") {
+                return SUPABASE_URL + "/storage/v1/object/public/" + BUCKET + "/" +
+                    item.arquivo.split("/").map(encodeURIComponent).join("/");
+            }
+            return item.arquivo;
+        }
+
+        /* ---------- Biblioteca ---------- */
+        function manifestoPadrao() {
+            return {
+                atualizadoEm: new Date().toISOString(),
+                fotos: FOTOS_PADRAO.map(arquivo => ({ arquivo: arquivo, nome: baseNome(arquivo), origem: "site" })),
+                musicas: [{ arquivo: MUSICA_PADRAO, nome: MUSICA_PADRAO, origem: "site" }]
+            };
+        }
+
+        function aplicarBiblioteca(dados) {
+            const listaFotos = Array.isArray(dados && dados.fotos) ? dados.fotos : [];
+            const listaMusicas = Array.isArray(dados && dados.musicas) ? dados.musicas : [];
+
+            fotos = listaFotos
+                .filter(item => item && item.arquivo)
+                .slice(0, MAX_FOTOS)
+                .map(item => ({
+                    arquivo: item.arquivo,
+                    nome: item.nome || baseNome(item.arquivo),
+                    origem: item.origem === "storage" ? "storage" : "site"
+                }));
+
+            musicas = listaMusicas
+                .filter(item => item && item.arquivo)
+                .slice(0, MAX_MUSICAS)
+                .map(item => ({
+                    arquivo: item.arquivo,
+                    nome: item.nome || baseNome(item.arquivo),
+                    origem: item.origem === "storage" ? "storage" : "site"
+                }));
+        }
+
+        function manifestoAtual(novasFotos, novasMusicas) {
+            return {
+                atualizadoEm: new Date().toISOString(),
+                fotos: (novasFotos || fotos).map(item => ({
+                    arquivo: item.arquivo, nome: item.nome, origem: item.origem
+                })),
+                musicas: (novasMusicas || musicas).map(item => ({
+                    arquivo: item.arquivo, nome: item.nome, origem: item.origem
+                }))
+            };
+        }
+
+        function guardarCache() {
+            try {
+                localStorage.setItem(CACHE_CHAVE, JSON.stringify(manifestoAtual()));
+            } catch (erro) { }
+        }
+
+        function lerCache() {
+            try {
+                const salvo = localStorage.getItem(CACHE_CHAVE);
+                return salvo ? JSON.parse(salvo) : null;
+            } catch (erro) {
+                return null;
+            }
+        }
+
+        async function carregarBiblioteca() {
+            if (!nuvemConfigurada()) {
+                aplicarBiblioteca(manifestoPadrao());
+                return;
+            }
+            try {
+                const dados = await lerBibliotecaNuvem();
+                nuvemIndisponivel = false;
+                aplicarBiblioteca(dados || manifestoPadrao());
+                guardarCache();
+            } catch (erro) {
+                console.warn("Não foi possível ler a biblioteca da nuvem:", erro);
+                nuvemIndisponivel = true;
+                aplicarBiblioteca(lerCache() || manifestoPadrao());
+            }
+        }
+
+        async function recarregarBiblioteca() {
+            if (!nuvemConfigurada() || enviando) return;
+            try {
+                const dados = await lerBibliotecaNuvem();
+                nuvemIndisponivel = false;
+                if (dados) {
+                    aplicarBiblioteca(dados);
+                    guardarCache();
+                }
+                atualizarTudo();
+            } catch (erro) {
+                console.warn("Falha ao atualizar da nuvem:", erro);
+                nuvemIndisponivel = true;
+                atualizarStatusNuvem();
+            }
+        }
+
+        async function salvarBiblioteca(opcoes) {
+            if (!nuvemConfigurada()) throw new Error("Configure o Supabase no index.html (veja supabase.sql).");
+
+            const novasFotos = opcoes.fotos || fotos;
+            const novasMusicas = opcoes.musicas || musicas;
+            const enviados = [];
+
+            try {
+                const arquivos = opcoes.arquivos || [];
+                for (let i = 0; i < arquivos.length; i++) {
+                    if (opcoes.progresso) opcoes.progresso(i + 1, arquivos.length);
+                    await enviarArquivoNuvem(arquivos[i].path, arquivos[i].blob);
+                    enviados.push(arquivos[i].path);
+                }
+                await gravarBibliotecaNuvem(manifestoAtual(novasFotos, novasMusicas));
+            } catch (erro) {
+                await removerArquivosNuvem(enviados);
+                throw erro;
+            }
+
+            fotos = novasFotos;
+            musicas = novasMusicas;
+            nuvemIndisponivel = false;
+            guardarCache();
+            await removerArquivosNuvem(opcoes.remover || []);
+        }
+
+        async function executar(texto, acao) {
+            if (enviando) return false;
+            enviando = true;
+            atualizarStatusNuvem();
+            avisar(texto, 60000);
+            try {
+                await acao();
+                return true;
+            } catch (erro) {
+                console.error(erro);
+                avisar("Não deu certo: " + (erro.message || erro), 7000);
+                return false;
+            } finally {
+                enviando = false;
+                atualizarStatusNuvem();
+            }
+        }
+
+        function prepararSources() {
+            fotosSrc = fotos.map(urlDoArquivo);
+            musicasSrc = musicas.map(urlDoArquivo);
+        }
+
+        /* ---------- Carrossel ---------- */
+        const fotoAtualImg = document.getElementById("fotoAtual");
+        const fotoAnteriorImg = document.getElementById("fotoAnterior");
+        const fotoProximaImg = document.getElementById("fotoProxima");
+        const avisoSemFotos = document.getElementById("avisoSemFotos");
+
+        function atualizarFotos() {
+            const total = fotosSrc.length;
+            if (total === 0) {
+                fotoAtualImg.style.display = "none";
+                fotoAnteriorImg.style.display = "none";
+                fotoProximaImg.style.display = "none";
+                avisoSemFotos.style.display = "flex";
+                return;
+            }
+            avisoSemFotos.style.display = "none";
+            fotoAtualImg.style.display = "";
+            fotoAnteriorImg.style.display = "";
+            fotoProximaImg.style.display = "";
+            fotoIndex = ((fotoIndex % total) + total) % total;
+            fotoAtualImg.src = fotosSrc[fotoIndex];
+            fotoAnteriorImg.src = fotosSrc[(fotoIndex - 1 + total) % total];
+            fotoProximaImg.src = fotosSrc[(fotoIndex + 1) % total];
+        }
+
+        function proxima() {
+            if (fotosSrc.length < 2) return;
+            fotoIndex = (fotoIndex + 1) % fotosSrc.length;
+            atualizarFotos();
+        }
+
+        function anterior() {
+            if (fotosSrc.length < 2) return;
+            fotoIndex = (fotoIndex - 1 + fotosSrc.length) % fotosSrc.length;
+            atualizarFotos();
+        }
+
+        /* ---------- Player de música ---------- */
+        const audioMusica = document.getElementById("musica");
+        const listaMusicasApp = document.getElementById("listaMusicasApp");
+
+        function atualizarMusica() {
+            listaMusicasApp.innerHTML = "";
+
+            if (musicasSrc.length === 0) {
+                audioMusica.style.display = "none";
+                listaMusicasApp.style.display = "none";
+                delete audioMusica.dataset.srcAtual;
+                audioMusica.removeAttribute("src");
+                return;
+            }
+
+            audioMusica.style.display = "block";
+            if (musicaIndex >= musicasSrc.length) musicaIndex = 0;
+
+            const src = musicasSrc[musicaIndex];
+            if (audioMusica.dataset.srcAtual !== src) {
+                audioMusica.src = src;
+                audioMusica.dataset.srcAtual = src;
+            }
+
+            if (musicasSrc.length > 1) {
+                listaMusicasApp.style.display = "flex";
+                musicas.forEach((musica, i) => {
+                    const botao = document.createElement("button");
+                    botao.type = "button";
+                    botao.className = "musica-pill" + (i === musicaIndex ? " tocando" : "");
+                    botao.textContent = (i === musicaIndex ? "▶ " : "♪ ") + (musica.nome || "Música " + (i + 1));
+                    botao.title = musica.nome || "Música " + (i + 1);
+                    botao.onclick = () => {
+                        musicaIndex = i;
+                        delete audioMusica.dataset.srcAtual;
+                        atualizarMusica();
+                        audioMusica.play().catch(() => { });
+                    };
+                    listaMusicasApp.appendChild(botao);
+                });
+            } else {
+                listaMusicasApp.style.display = "none";
+            }
+        }
+
+        audioMusica.addEventListener("ended", () => {
+            if (musicasSrc.length > 1) {
+                musicaIndex = (musicaIndex + 1) % musicasSrc.length;
+                delete audioMusica.dataset.srcAtual;
+                atualizarMusica();
+                audioMusica.play().catch(() => { });
+            } else if (musicasSrc.length === 1) {
+                audioMusica.currentTime = 0;
+                audioMusica.play().catch(() => { });
+            }
+        });
+
+        // Função para iniciar a música (usada na transição da tela de abertura)
+        function tocarMusica() {
+            if (!musicasSrc.length) return;
+            audioMusica.play().catch(() => { });
+        }
+
+        // Tela de Abertura: transição suave para a página principal e início da música
+        function iniciarPagina() {
+            document.getElementById("telaAbertura").style.opacity = "0";
+            document.getElementById("telaAbertura").style.transform = "translateY(-100%)";
+            setTimeout(() => {
+                document.getElementById("telaAbertura").style.display = "none";
+                document.getElementById("conteudoPrincipal").style.display = "block";
+                tocarMusica();
+            }, 1000);
+        }
+
+        document.getElementById("botaoSurpresa").addEventListener("click", iniciarPagina);
+
+        setInterval(proxima, 4000);
+
+        /* ============================================================
+           PAINEL DE GERENCIAMENTO
+           ============================================================ */
+        function abrirGerenciar() {
+            atualizarStatusNuvem();
+            renderizarPainelFotos();
+            renderizarPainelMusicas();
+            document.getElementById("modalGerenciar").style.display = "flex";
+            recarregarBiblioteca();
+        }
+
+        function fecharGerenciar() {
+            document.getElementById("modalGerenciar").style.display = "none";
+        }
+
+        function irParaAdicionarFotos() {
+            abrirGerenciar();
+            trocarAba("fotos");
+        }
+
+        function trocarAba(aba) {
+            const abas = { fotos: "abaFotos", musicas: "abaMusicas" };
+            Object.keys(abas).forEach(nome => {
+                const elemento = document.getElementById(abas[nome]);
+                if (elemento) elemento.style.display = (nome === aba) ? "" : "none";
+            });
+            document.querySelectorAll(".aba").forEach(botao => {
+                botao.classList.toggle("ativa", botao.dataset.aba === aba);
+            });
+        }
+
+        function atualizarStatusNuvem() {
+            const status = document.getElementById("statusNuvem");
+            if (!status) return;
+
+            if (!nuvemConfigurada()) {
+                status.className = "status-nuvem desconectado";
+                status.textContent = "Falta configurar o Supabase no index.html (SUPABASE_URL e SUPABASE_CHAVE). Enquanto isso, o site mostra as fotos publicadas.";
+                return;
+            }
+
+            if (enviando) {
+                status.className = "status-nuvem conectado";
+                status.textContent = "Salvando na nuvem... não feche esta página.";
+                return;
+            }
+
+            if (nuvemIndisponivel) {
+                status.className = "status-nuvem desconectado";
+                status.textContent = "Sem conexão com a nuvem agora. Mostrando a última versão salva neste aparelho.";
+                return;
+            }
+
+            status.className = "status-nuvem conectado";
+            status.textContent = "☁️ Tudo salvo na nuvem. As mudanças valem para todo mundo que abrir o site.";
+        }
+
+        function renderizarPainelFotos() {
+            const grade = document.getElementById("gradeFotos");
+            const contador = document.getElementById("contadorFotos");
+            const btnAdd = document.getElementById("btnAddFotos");
+            const btnLimpar = document.getElementById("btnLimparFotos");
+            const btnRestaurar = document.getElementById("btnRestaurarFotos");
+            const podeEditar = nuvemConfigurada();
+
+            contador.textContent = fotos.length + " de " + MAX_FOTOS + " fotos";
+            btnAdd.disabled = !podeEditar || fotos.length >= MAX_FOTOS;
+            btnAdd.textContent = (fotos.length >= MAX_FOTOS)
+                ? "Limite de 25 fotos atingido"
+                : "➕ Adicionar fotos";
+            if (btnLimpar) btnLimpar.disabled = !podeEditar || fotos.length === 0;
+            if (btnRestaurar) btnRestaurar.disabled = !podeEditar;
+
+            grade.innerHTML = "";
+            fotos.forEach((entrada, i) => {
+                const item = document.createElement("div");
+                item.className = "item-foto";
+
+                const img = document.createElement("img");
+                img.loading = "lazy";
+                img.alt = entrada.nome || "Foto " + (i + 1);
+                img.src = fotosSrc[i] || "";
+
+                const indice = document.createElement("span");
+                indice.className = "indice";
+                indice.textContent = i + 1;
+
+                const acoes = document.createElement("div");
+                acoes.className = "acoes";
+
+                const btnTrocar = document.createElement("button");
+                btnTrocar.type = "button";
+                btnTrocar.textContent = "🔄 Trocar";
+                btnTrocar.disabled = !podeEditar || enviando;
+                btnTrocar.onclick = () => escolherFotoParaTrocar(i);
+
+                const btnRemover = document.createElement("button");
+                btnRemover.type = "button";
+                btnRemover.className = "btn-remover";
+                btnRemover.textContent = "🗑";
+                btnRemover.title = "Remover foto";
+                btnRemover.disabled = !podeEditar || enviando;
+                btnRemover.onclick = () => removerFoto(i);
+
+                acoes.append(btnTrocar, btnRemover);
+                item.append(img, indice, acoes);
+                grade.appendChild(item);
+            });
+        }
+
+        function renderizarPainelMusicas() {
+            const lista = document.getElementById("listaMusicas");
+            const contador = document.getElementById("contadorMusicas");
+            const btnAdd = document.getElementById("btnAddMusicas");
+            const btnLimpar = document.getElementById("btnLimparMusicas");
+            const podeEditar = nuvemConfigurada();
+
+            contador.textContent = musicas.length + " de " + MAX_MUSICAS + " músicas";
+            btnAdd.disabled = !podeEditar || musicas.length >= MAX_MUSICAS;
+            btnAdd.textContent = (musicas.length >= MAX_MUSICAS)
+                ? "Limite de 3 músicas atingido"
+                : "➕ Adicionar música";
+            if (btnLimpar) btnLimpar.disabled = !podeEditar || musicas.length === 0;
+
+            lista.innerHTML = "";
+            musicas.forEach((entrada, i) => {
+                const item = document.createElement("div");
+                item.className = "item-musica";
+
+                const nome = document.createElement("span");
+                nome.className = "nome";
+                nome.textContent = (i + 1) + ". " + (entrada.nome || "Música");
+
+                const player = document.createElement("audio");
+                player.controls = true;
+                player.preload = "none";
+                player.src = musicasSrc[i] || "";
+
+                const acoes = document.createElement("div");
+                acoes.className = "acoes";
+
+                const btnTrocar = document.createElement("button");
+                btnTrocar.type = "button";
+                btnTrocar.textContent = "🔄 Trocar";
+                btnTrocar.disabled = !podeEditar || enviando;
+                btnTrocar.onclick = () => escolherMusicaParaTrocar(i);
+
+                const btnRemover = document.createElement("button");
+                btnRemover.type = "button";
+                btnRemover.textContent = "🗑 Remover";
+                btnRemover.disabled = !podeEditar || enviando;
+                btnRemover.onclick = () => removerMusica(i);
+
+                acoes.append(btnTrocar, btnRemover);
+                item.append(nome, player, acoes);
+                lista.appendChild(item);
+            });
+        }
+
+        function atualizarTudo() {
+            prepararSources();
+            atualizarFotos();
+            atualizarMusica();
+            atualizarStatusNuvem();
+            renderizarPainelFotos();
+            renderizarPainelMusicas();
+        }
+
+        function exigirNuvem() {
+            if (nuvemConfigurada()) return true;
+            avisar("Configure o Supabase no index.html para editar (passo a passo em supabase.sql).", 7000);
+            return false;
+        }
+
+        /* ---------- Fotos: adicionar / trocar / remover ---------- */
+        async function adicionarFotos(listaArquivos) {
+            if (!exigirNuvem()) return;
+
+            const arquivos = Array.from(listaArquivos || []).filter(arquivo => arquivo.type.startsWith("image/"));
+            if (!arquivos.length) {
+                avisar("Escolha arquivos de imagem (JPG, PNG, WEBP...).");
+                return;
+            }
+
+            const espaco = MAX_FOTOS - fotos.length;
+            if (espaco <= 0) {
+                avisar("O limite de " + MAX_FOTOS + " fotos já foi atingido.");
+                return;
+            }
+            if (arquivos.length > espaco) {
+                avisar("Só cabem mais " + espaco + " foto(s). As demais não foram adicionadas.", 5000);
+            }
+
+            const novasFotos = fotos.slice();
+            const envios = [];
+            let grandes = 0;
+
+            for (const arquivo of arquivos.slice(0, espaco)) {
+                if (arquivo.size > LIMITE_ARQUIVO) {
+                    grandes++;
+                    continue;
+                }
+                const caminho = caminhoDeArquivo("fotos", arquivo);
+                envios.push({ path: caminho, blob: arquivo });
+                novasFotos.push({ arquivo: caminho, nome: arquivo.name, origem: "storage" });
+            }
+
+            if (grandes) avisar(grandes + " arquivo(s) ignorado(s) por passar de 20 MB.", 5000);
+            if (!envios.length) return;
+
+            const sucesso = await executar("Enviando fotos...", () => salvarBiblioteca({
+                fotos: novasFotos,
+                arquivos: envios,
+                progresso: (i, total) => avisar("Enviando foto " + i + " de " + total + "...", 60000)
+            }));
+
+            if (!sucesso) return;
+            atualizarTudo();
+            avisar("Fotos salvas na nuvem!", 5000);
+        }
+
+        function escolherFotoParaTrocar(indice) {
+            if (!exigirNuvem()) return;
+            indiceTrocaFoto = indice;
+            const input = document.getElementById("inputTrocarFoto");
+            input.value = "";
+            input.click();
+        }
+
+        async function trocarFoto(indice, arquivo) {
+            if (!exigirNuvem()) return;
+            if (!arquivo || !arquivo.type.startsWith("image/")) {
+                avisar("Escolha um arquivo de imagem.");
+                return;
+            }
+            if (arquivo.size > LIMITE_ARQUIVO) {
+                avisar("Essa imagem passa de 20 MB.");
+                return;
+            }
+
+            const antiga = fotos[indice];
+            if (!antiga) return;
+
+            const caminho = caminhoDeArquivo("fotos", arquivo);
+            const novasFotos = fotos.slice();
+            novasFotos[indice] = { arquivo: caminho, nome: arquivo.name, origem: "storage" };
+            const remover = antiga.origem === "storage" ? [antiga.arquivo] : [];
+
+            const sucesso = await executar("Trocando foto...", () => salvarBiblioteca({
+                fotos: novasFotos,
+                arquivos: [{ path: caminho, blob: arquivo }],
+                remover: remover
+            }));
+
+            if (!sucesso) return;
+            atualizarTudo();
+            avisar("Foto trocada!", 5000);
+        }
+
+        async function removerFoto(indice) {
+            if (!exigirNuvem()) return;
+
+            const entrada = fotos[indice];
+            if (!entrada) return;
+            if (!confirm("Remover a foto " + (indice + 1) + "?")) return;
+
+            const novasFotos = fotos.slice();
+            novasFotos.splice(indice, 1);
+            const remover = entrada.origem === "storage" ? [entrada.arquivo] : [];
+
+            const sucesso = await executar("Removendo foto...", () => salvarBiblioteca({
+                fotos: novasFotos,
+                remover: remover
+            }));
+
+            if (!sucesso) return;
+            if (indice < fotoIndex) fotoIndex--;
+            atualizarTudo();
+            avisar("Foto removida.", 5000);
+        }
+
+        async function limparFotos() {
+            if (!exigirNuvem()) return;
+            if (!fotos.length) {
+                avisar("Não há fotos para remover.");
+                return;
+            }
+            if (!confirm("Remover todas as " + fotos.length + " fotos?")) return;
+
+            const remover = fotos
+                .filter(item => item.origem === "storage")
+                .map(item => item.arquivo);
+
+            const sucesso = await executar("Removendo fotos...", () => salvarBiblioteca({
+                fotos: [],
+                remover: remover
+            }));
+
+            if (!sucesso) return;
+            fotoIndex = 0;
+            atualizarTudo();
+            avisar("Todas as fotos foram removidas.", 5000);
+        }
+
+        async function restaurarFotos() {
+            if (!exigirNuvem()) return;
+            if (!confirm("Restaurar as 25 fotos originais? As fotos adicionadas ou trocadas serão descartadas.")) return;
+
+            const remover = fotos
+                .filter(item => item.origem === "storage")
+                .map(item => item.arquivo);
+            const novasFotos = FOTOS_PADRAO.map(arquivo => ({
+                arquivo: arquivo,
+                nome: baseNome(arquivo),
+                origem: "site"
+            }));
+
+            const sucesso = await executar("Restaurando fotos...", () => salvarBiblioteca({
+                fotos: novasFotos,
+                remover: remover
+            }));
+
+            if (!sucesso) return;
+            fotoIndex = 0;
+            atualizarTudo();
+            avisar("Fotos originais restauradas.", 5000);
+        }
+
+        /* ---------- Músicas: adicionar / trocar / remover ---------- */
+        async function adicionarMusicas(listaArquivos) {
+            if (!exigirNuvem()) return;
+
+            const arquivos = Array.from(listaArquivos || []).filter(arquivo => arquivo.type.startsWith("audio/"));
+            if (!arquivos.length) {
+                avisar("Escolha arquivos de áudio (MP3, OGG, WAV...).");
+                return;
+            }
+
+            const espaco = MAX_MUSICAS - musicas.length;
+            if (espaco <= 0) {
+                avisar("O limite de " + MAX_MUSICAS + " músicas já foi atingido.");
+                return;
+            }
+            if (arquivos.length > espaco) {
+                avisar("Só cabem mais " + espaco + " música(s). As demais não foram adicionadas.", 5000);
+            }
+
+            const novasMusicas = musicas.slice();
+            const envios = [];
+            let grandes = 0;
+
+            for (const arquivo of arquivos.slice(0, espaco)) {
+                if (arquivo.size > LIMITE_ARQUIVO) {
+                    grandes++;
+                    continue;
+                }
+                const caminho = caminhoDeArquivo("musicas", arquivo);
+                envios.push({ path: caminho, blob: arquivo });
+                novasMusicas.push({ arquivo: caminho, nome: arquivo.name, origem: "storage" });
+            }
+
+            if (grandes) avisar(grandes + " arquivo(s) ignorado(s) por passar de 20 MB.", 5000);
+            if (!envios.length) return;
+
+            const sucesso = await executar("Enviando músicas...", () => salvarBiblioteca({
+                musicas: novasMusicas,
+                arquivos: envios,
+                progresso: (i, total) => avisar("Enviando música " + i + " de " + total + "...", 60000)
+            }));
+
+            if (!sucesso) return;
+            atualizarTudo();
+            avisar("Música(s) salva(s) na nuvem!", 5000);
+        }
+
+        function escolherMusicaParaTrocar(indice) {
+            if (!exigirNuvem()) return;
+            indiceTrocaMusica = indice;
+            const input = document.getElementById("inputTrocarMusica");
+            input.value = "";
+            input.click();
+        }
+
+        async function trocarMusica(indice, arquivo) {
+            if (!exigirNuvem()) return;
+            if (!arquivo || !arquivo.type.startsWith("audio/")) {
+                avisar("Escolha um arquivo de áudio.");
+                return;
+            }
+            if (arquivo.size > LIMITE_ARQUIVO) {
+                avisar("Essa música passa de 20 MB.");
+                return;
+            }
+
+            const antiga = musicas[indice];
+            if (!antiga) return;
+
+            const caminho = caminhoDeArquivo("musicas", arquivo);
+            const novasMusicas = musicas.slice();
+            novasMusicas[indice] = { arquivo: caminho, nome: arquivo.name, origem: "storage" };
+            const remover = antiga.origem === "storage" ? [antiga.arquivo] : [];
+
+            const sucesso = await executar("Trocando música...", () => salvarBiblioteca({
+                musicas: novasMusicas,
+                arquivos: [{ path: caminho, blob: arquivo }],
+                remover: remover
+            }));
+
+            if (!sucesso) return;
+            delete audioMusica.dataset.srcAtual;
+            atualizarTudo();
+            avisar("Música trocada!", 5000);
+        }
+
+        async function removerMusica(indice) {
+            if (!exigirNuvem()) return;
+
+            const entrada = musicas[indice];
+            if (!entrada) return;
+            if (!confirm("Remover a música " + (indice + 1) + "?")) return;
+
+            const eraAtual = indice === musicaIndex;
+            const novasMusicas = musicas.slice();
+            novasMusicas.splice(indice, 1);
+            const remover = entrada.origem === "storage" ? [entrada.arquivo] : [];
+
+            const sucesso = await executar("Removendo música...", () => salvarBiblioteca({
+                musicas: novasMusicas,
+                remover: remover
+            }));
+
+            if (!sucesso) return;
+            if (indice < musicaIndex) musicaIndex--;
+            if (musicaIndex >= musicas.length) musicaIndex = 0;
+            if (eraAtual) delete audioMusica.dataset.srcAtual;
+            atualizarTudo();
+            avisar("Música removida.", 5000);
+        }
+
+        async function limparMusicas() {
+            if (!exigirNuvem()) return;
+            if (!musicas.length) {
+                avisar("Não há músicas para remover.");
+                return;
+            }
+            if (!confirm("Remover todas as " + musicas.length + " músicas?")) return;
+
+            const remover = musicas
+                .filter(item => item.origem === "storage")
+                .map(item => item.arquivo);
+
+            const sucesso = await executar("Removendo músicas...", () => salvarBiblioteca({
+                musicas: [],
+                remover: remover
+            }));
+
+            if (!sucesso) return;
+            musicaIndex = 0;
+            delete audioMusica.dataset.srcAtual;
+            atualizarTudo();
+            avisar("Todas as músicas foram removidas.", 5000);
+        }
+
+        /* ---------- Entradas de arquivo ---------- */
+        document.getElementById("inputAddFotos").addEventListener("change", async (evento) => {
+            const arquivos = Array.from(evento.target.files || []);
+            evento.target.value = "";
+            await adicionarFotos(arquivos);
+        });
+
+        document.getElementById("inputAddMusicas").addEventListener("change", async (evento) => {
+            const arquivos = Array.from(evento.target.files || []);
+            evento.target.value = "";
+            await adicionarMusicas(arquivos);
+        });
+
+        document.getElementById("inputTrocarFoto").addEventListener("change", async (evento) => {
+            const arquivo = evento.target.files && evento.target.files[0];
+            evento.target.value = "";
+            const indice = indiceTrocaFoto;
+            indiceTrocaFoto = null;
+            if (indice !== null && arquivo) await trocarFoto(indice, arquivo);
+        });
+
+        document.getElementById("inputTrocarMusica").addEventListener("change", async (evento) => {
+            const arquivo = evento.target.files && evento.target.files[0];
+            evento.target.value = "";
+            const indice = indiceTrocaMusica;
+            indiceTrocaMusica = null;
+            if (indice !== null && arquivo) await trocarMusica(indice, arquivo);
+        });
+
+        // Arrastar e soltar fotos na grade
+        const gradeFotos = document.getElementById("gradeFotos");
+        gradeFotos.addEventListener("dragover", (evento) => {
+            evento.preventDefault();
+            gradeFotos.classList.add("arrastando");
+        });
+        gradeFotos.addEventListener("dragleave", () => gradeFotos.classList.remove("arrastando"));
+        gradeFotos.addEventListener("drop", async (evento) => {
+            evento.preventDefault();
+            gradeFotos.classList.remove("arrastando");
+            await adicionarFotos(evento.dataTransfer.files);
+        });
+
+        // Fechar o painel clicando fora
+        document.getElementById("modalGerenciar").addEventListener("click", (evento) => {
+            if (evento.target.id === "modalGerenciar") fecharGerenciar();
+        });
+
+        // Fechar o painel com Esc
+        document.addEventListener("keydown", (evento) => {
+            if (evento.key === "Escape") fecharGerenciar();
+        });
+
+        // Ao voltar para a aba, atualiza para ver o que a outra pessoa mudou
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible") recarregarBiblioteca();
+        });
+
+        /* ---------- Backup (.zip) ---------- */
+        function carregarScript(url) {
+            return new Promise((resolver, rejeitar) => {
+                const script = document.createElement("script");
+                script.src = url;
+                script.onload = () => resolver();
+                script.onerror = () => rejeitar(new Error("Falha ao carregar " + url));
+                document.head.appendChild(script);
+            });
+        }
+
+        function baixarArquivo(blob, nome) {
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = nome;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 4000);
+        }
+
+        async function exportarBackup() {
+            const botao = document.getElementById("btnExportar");
+            const textoOriginal = botao.textContent;
+            botao.disabled = true;
+            botao.textContent = "Preparando arquivos...";
+
+            try {
+                if (typeof JSZip === "undefined") {
+                    await carregarScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");
+                }
+
+                const zip = new JSZip();
+                const pastaFotos = zip.folder("fotos");
+                const pastaMusicas = zip.folder("musicas");
+                const manifesto = { geradoEm: new Date().toISOString(), fotos: [], musicas: [] };
+
+                for (let i = 0; i < fotosSrc.length; i++) {
+                    if (!fotosSrc[i]) continue;
+                    try {
+                        const resposta = await fetch(fotosSrc[i]);
+                        const blob = await resposta.blob();
+                        const extensao = extensaoDe(blob.type, fotos[i] && fotos[i].nome);
+                        const nome = "foto" + (i + 1) + "." + extensao;
+                        pastaFotos.file(nome, blob);
+                        manifesto.fotos.push({ arquivo: "fotos/" + nome, origem: (fotos[i] && fotos[i].nome) || "" });
+                    } catch (erro) {
+                        console.warn("Foto não exportada:", i, erro);
+                    }
+                }
+
+                for (let i = 0; i < musicasSrc.length; i++) {
+                    if (!musicasSrc[i]) continue;
+                    try {
+                        const resposta = await fetch(musicasSrc[i]);
+                        const blob = await resposta.blob();
+                        const extensao = extensaoDe(blob.type, musicas[i] && musicas[i].nome);
+                        const nome = "musica" + (i + 1) + "." + extensao;
+                        pastaMusicas.file(nome, blob);
+                        manifesto.musicas.push({ arquivo: "musicas/" + nome, origem: (musicas[i] && musicas[i].nome) || "" });
+                    } catch (erro) {
+                        console.warn("Música não exportada:", i, erro);
+                    }
+                }
+
+                zip.file("biblioteca.json", JSON.stringify(manifesto, null, 2));
+                const conteudo = await zip.generateAsync({ type: "blob" });
+                baixarArquivo(conteudo, "backup-nossa-data.zip");
+                avisar("Backup gerado!");
+            } catch (erro) {
+                console.error(erro);
+                avisar("Não foi possível gerar o backup. Verifique sua conexão.");
+            } finally {
+                botao.disabled = false;
+                botao.textContent = textoOriginal;
+            }
+        }
+
+        /* ---------- Inicialização das mídias ---------- */
+        (async function iniciarMidias() {
+            // Limpa restos da versão antiga (GitHub), se existirem
+            try {
+                localStorage.removeItem("nossa-data-github");
+            } catch (erro) { }
+
+            await carregarBiblioteca();
+            prepararSources();
+            atualizarFotos();
+            atualizarMusica();
+            atualizarStatusNuvem();
+        })();
+
+        /* ============================================================
+           MENSAGENS (recadinhos entre vocês dois)
+           Ficam na tabela "mensagens" do Supabase. Cada aba mostra as
+           mensagens que a outra pessoa escreveu.
+           ============================================================ */
+        const MENSAGENS_CACHE = "nossa-data-mensagens";
+        const MAX_MENSAGEM = 1000;
+
+        let mensagens = { arthur: [], rayane: [] };
+        let mensagensCarregando = false;
+        let enviandoMensagem = false;
+        let mensagensIndisponiveis = false;
+
+        function nomeListaMensagens(para) {
+            return para === "arthur" ? "listaMensagensArthur" : "listaMensagensRayane";
+        }
+
+        function campoMensagem(para) {
+            return document.getElementById(para === "arthur" ? "textoMensagemArthur" : "textoMensagemRayane");
+        }
+
+        function formatarDataMensagem(iso) {
+            const data = new Date(iso);
+            if (isNaN(data.getTime())) return "";
+            const dois = numero => String(numero).padStart(2, "0");
+            return dois(data.getDate()) + "/" + dois(data.getMonth() + 1) + "/" + data.getFullYear() +
+                " às " + dois(data.getHours()) + ":" + dois(data.getMinutes());
+        }
+
+        function ordenarMensagens(lista) {
+            return lista.slice().sort((a, b) => new Date(b.criado_em) - new Date(a.criado_em));
+        }
+
+        function aplicarMensagens(lista) {
+            const separadas = { arthur: [], rayane: [] };
+            (Array.isArray(lista) ? lista : []).forEach(item => {
+                if (!item || !item.para || !separadas[item.para]) return;
+                separadas[item.para].push(item);
+            });
+            mensagens = {
+                arthur: ordenarMensagens(separadas.arthur),
+                rayane: ordenarMensagens(separadas.rayane)
+            };
+        }
+
+        function guardarCacheMensagens() {
+            try {
+                localStorage.setItem(MENSAGENS_CACHE, JSON.stringify(mensagens));
+            } catch (erro) { }
+        }
+
+        function lerCacheMensagens() {
+            try {
+                const salvo = localStorage.getItem(MENSAGENS_CACHE);
+                return salvo ? JSON.parse(salvo) : null;
+            } catch (erro) {
+                return null;
+            }
+        }
+
+        function renderizarMensagens() {
+            ["arthur", "rayane"].forEach(para => {
+                const lista = document.getElementById(nomeListaMensagens(para));
+                if (!lista) return;
+
+                lista.innerHTML = "";
+                const itens = mensagens[para] || [];
+
+                if (!itens.length) {
+                    const vazio = document.createElement("p");
+                    vazio.className = "mensagens-vazio";
+                    vazio.textContent = "Nenhuma mensagem ainda 💌";
+                    lista.appendChild(vazio);
+                    return;
+                }
+
+                itens.forEach(item => {
+                    const cartao = document.createElement("div");
+                    cartao.className = "mensagem-item";
+
+                    const texto = document.createElement("p");
+                    texto.textContent = item.texto;
+
+                    const quando = document.createElement("time");
+                    quando.dateTime = item.criado_em || "";
+                    quando.textContent = formatarDataMensagem(item.criado_em);
+
+                    const apagar = document.createElement("button");
+                    apagar.type = "button";
+                    apagar.className = "mensagem-apagar";
+                    apagar.title = "Apagar mensagem";
+                    apagar.setAttribute("aria-label", "Apagar mensagem");
+                    apagar.textContent = "✕";
+                    apagar.onclick = () => apagarMensagem(item);
+
+                    cartao.append(texto, quando, apagar);
+                    lista.appendChild(cartao);
+                });
+            });
+
+            const aviso = mensagensIndisponiveis
+                ? (nuvemConfigurada()
+                    ? "Sem conexão com a nuvem agora. Mostrando as mensagens salvas neste aparelho."
+                    : "As mensagens precisam do Supabase configurado no index.html para serem salvas.")
+                : "";
+            document.querySelectorAll(".aviso-mensagens").forEach(elemento => {
+                elemento.textContent = aviso;
+                elemento.style.display = aviso ? "block" : "none";
+            });
+
+            document.querySelectorAll(".botao-enviar-mensagem").forEach(botao => {
+                botao.disabled = !nuvemConfigurada() || enviandoMensagem;
+                botao.textContent = enviandoMensagem ? "Enviando..." : "Enviar 💌";
+            });
+        }
+
+        async function carregarMensagens() {
+            const cache = lerCacheMensagens();
+            if (cache && (Array.isArray(cache.arthur) || Array.isArray(cache.rayane))) {
+                mensagens = {
+                    arthur: cache.arthur || [],
+                    rayane: cache.rayane || []
+                };
+            }
+            renderizarMensagens();
+
+            if (!nuvemConfigurada()) {
+                mensagensIndisponiveis = true;
+                renderizarMensagens();
+                return;
+            }
+            if (mensagensCarregando) return;
+
+            mensagensCarregando = true;
+            try {
+                const resposta = await fetch(
+                    SUPABASE_URL + "/rest/v1/mensagens?select=id,para,texto,criado_em&order=criado_em.desc",
+                    { headers: cabecalhosNuvem({ "Accept": "application/json" }) }
+                );
+                if (!resposta.ok) throw new Error(await textoErro(resposta));
+                aplicarMensagens(await resposta.json());
+                mensagensIndisponiveis = false;
+                guardarCacheMensagens();
+            } catch (erro) {
+                console.warn("Não foi possível ler as mensagens:", erro);
+                mensagensIndisponiveis = true;
+            } finally {
+                mensagensCarregando = false;
+                renderizarMensagens();
+            }
+        }
+
+        async function enviarMensagem(para, texto) {
+            const limpo = String(texto || "").trim();
+            if (!limpo) {
+                avisar("Escreva alguma coisa antes de enviar 💌");
+                return false;
+            }
+            if (limpo.length > MAX_MENSAGEM) {
+                avisar("A mensagem é muito longa (máximo de " + MAX_MENSAGEM + " caracteres).");
+                return false;
+            }
+            if (!nuvemConfigurada()) {
+                avisar("Configure o Supabase no index.html para salvar as mensagens.", 6000);
+                return false;
+            }
+            if (enviandoMensagem) return false;
+
+            enviandoMensagem = true;
+            renderizarMensagens();
+            try {
+                const resposta = await fetch(SUPABASE_URL + "/rest/v1/mensagens", {
+                    method: "POST",
+                    headers: cabecalhosNuvem({
+                        "Content-Type": "application/json",
+                        "Prefer": "return=representation"
+                    }),
+                    body: JSON.stringify({ para: para, texto: limpo })
+                });
+                if (!resposta.ok) throw new Error(await textoErro(resposta));
+
+                const devolvido = await resposta.json();
+                const registro = (Array.isArray(devolvido) && devolvido[0])
+                    ? devolvido[0]
+                    : { id: "local-" + Date.now(), para: para, texto: limpo, criado_em: new Date().toISOString() };
+
+                mensagens[para] = ordenarMensagens([registro].concat(mensagens[para] || []));
+                mensagensIndisponiveis = false;
+                guardarCacheMensagens();
+                avisar("Mensagem enviada 💌", 4000);
+                return true;
+            } catch (erro) {
+                console.error(erro);
+                avisar("Não deu certo enviar: " + (erro.message || erro), 7000);
+                return false;
+            } finally {
+                enviandoMensagem = false;
+                renderizarMensagens();
+            }
+        }
+
+        async function enviarMensagemDoForm(evento, para) {
+            if (evento && evento.preventDefault) evento.preventDefault();
+            const campo = campoMensagem(para);
+            if (!campo) return false;
+
+            const enviou = await enviarMensagem(para, campo.value);
+            if (enviou) campo.value = "";
+            return enviou;
+        }
+
+        async function apagarMensagem(item) {
+            if (!item || item.id === undefined || item.id === null) return;
+            if (!confirm("Apagar esta mensagem?")) return;
+
+            try {
+                const resposta = await fetch(
+                    SUPABASE_URL + "/rest/v1/mensagens?id=eq." + encodeURIComponent(item.id),
+                    {
+                        method: "DELETE",
+                        headers: cabecalhosNuvem({ "Prefer": "return=minimal" })
+                    }
+                );
+                if (!resposta.ok) throw new Error(await textoErro(resposta));
+
+                mensagens[item.para] = (mensagens[item.para] || [])
+                    .filter(mensagem => String(mensagem.id) !== String(item.id));
+                guardarCacheMensagens();
+                renderizarMensagens();
+                avisar("Mensagem apagada.", 3000);
+            } catch (erro) {
+                console.error(erro);
+                avisar("Não deu certo apagar: " + (erro.message || erro), 7000);
+            }
+        }
+
+        function trocarAbaSobre(nome) {
+            const paineis = {
+                historia: "abaSobreHistoria",
+                arthur: "abaSobreArthur",
+                rayane: "abaSobreRayane"
+            };
+            Object.keys(paineis).forEach(chave => {
+                const painel = document.getElementById(paineis[chave]);
+                if (painel) painel.style.display = (chave === nome) ? "block" : "none";
+            });
+            document.querySelectorAll(".sobre-aba").forEach(botao => {
+                botao.classList.toggle("ativa", botao.dataset.sobreAba === nome);
+            });
+        }
+
+        // Fecha o "Sobre Nós" clicando fora ou com Esc
+        document.getElementById("modalDescricao").addEventListener("click", evento => {
+            if (evento.target.id === "modalDescricao") fecharDescricao();
+        });
+
+        document.addEventListener("keydown", evento => {
+            if (evento.key === "Escape") fecharDescricao();
+        });
+
+        // Ao voltar para a aba, atualiza as mensagens (se o painel estiver aberto)
+        document.addEventListener("visibilitychange", () => {
+            const aberto = document.getElementById("modalDescricao").style.display === "flex";
+            if (document.visibilityState === "visible" && aberto) carregarMensagens();
+        });
+
+        // Modal principal (Curtir)
+        function mostrarModal() {
+            document.getElementById("modal").style.display = "flex";
+        }
+
+        function fecharModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        // Modal Descrição
+        function mostrarDescricao() {
+            document.getElementById("modalDescricao").style.display = "flex";
+            renderizarMensagens();
+            carregarMensagens();
+        }
+
+        function fecharDescricao() {
+            document.getElementById("modalDescricao").style.display = "none";
+        }
+
+        // Corações subindo
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }, 500);
+    </script>
+</body>
+
+</html>

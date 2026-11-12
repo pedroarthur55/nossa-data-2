@@ -19,6 +19,16 @@
             overflow-x: hidden;
         }
 
+        :focus-visible {
+            outline: 3px solid #8a1644;
+            outline-offset: 3px;
+        }
+
+        button {
+            min-height: 44px;
+            touch-action: manipulation;
+        }
+
         h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 3rem;
@@ -318,6 +328,9 @@
         }
 
         .painel-topo {
+            position: sticky;
+            top: 0;
+            z-index: 2;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -333,6 +346,9 @@
         }
 
         .painel-fechar {
+            min-width: 44px;
+            min-height: 44px;
+            border-radius: 50%;
             font-size: 1.4rem;
             line-height: 1;
             color: #d6336c;
@@ -342,6 +358,9 @@
         }
 
         .painel-abas {
+            position: sticky;
+            top: 0;
+            z-index: 2;
             display: flex;
             gap: 8px;
             padding: 12px 18px 0;
@@ -349,6 +368,7 @@
 
         .aba {
             flex: 1;
+            min-height: 44px;
             padding: 10px;
             font-family: 'Quicksand', sans-serif;
             font-size: 0.9rem;
@@ -368,6 +388,7 @@
         .painel-corpo {
             padding: 14px 18px 20px;
             overflow-y: auto;
+            overscroll-behavior: contain;
         }
 
         .status-nuvem {
@@ -386,6 +407,10 @@
         .status-nuvem.desconectado {
             color: #7a3f16;
             background: #fff3cd;
+        }
+
+        .painel-corpo button {
+            min-height: 44px;
         }
 
         .dica {
@@ -535,6 +560,220 @@
             cursor: not-allowed;
         }
 
+        /* Linha do tempo da playlist */
+        .linha-tempo {
+            margin-bottom: 14px;
+            padding: 12px;
+            background: #fff5f9;
+            border: 1px dashed #ffb3c6;
+            border-radius: 12px;
+        }
+
+        .linha-tempo-topo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .linha-tempo-titulo {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #d6336c;
+        }
+
+        .linha-tempo-total {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #b07a8f;
+            text-align: right;
+        }
+
+        .linha-tempo-passos {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .passo-tempo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: #fff;
+            border: 1px solid #ffe0ef;
+            border-radius: 10px;
+        }
+
+        .passo-tempo.atual {
+            border-color: #ff4d88;
+            box-shadow: 0 0 0 2px rgba(255, 77, 136, 0.15);
+        }
+
+        .passo-tempo.arrastando {
+            opacity: 0.55;
+        }
+
+        .passo-tempo.alvo-arraste {
+            border-color: #ff4d88;
+            box-shadow: 0 0 0 2px rgba(255, 77, 136, 0.2);
+        }
+
+        .passo-tempo .alca-arraste {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            color: #b07a8f;
+            background: transparent;
+            border: 0;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: grab;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .passo-tempo .alca-arraste:active {
+            cursor: grabbing;
+        }
+
+        .passo-tempo .numero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            width: 22px;
+            height: 22px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #d6336c;
+            background: #ffe0ef;
+            border-radius: 50%;
+        }
+
+        .passo-tempo.atual .numero {
+            color: #fff;
+            background: #ff4d88;
+        }
+
+        .passo-tempo .info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .passo-tempo .info strong {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 0.8rem;
+            color: #a05a74;
+        }
+
+        .passo-tempo .info small {
+            display: block;
+            font-size: 0.72rem;
+            color: #b07a8f;
+        }
+
+        .passo-tempo .acoes-passo {
+            display: flex;
+            gap: 4px;
+            flex: 0 0 auto;
+        }
+
+        .passo-tempo .acoes-passo button {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            font-size: 0.75rem;
+            line-height: 1;
+            color: #d6336c;
+            background: #ffe0ef;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .passo-tempo .acoes-passo button:disabled {
+            opacity: 0.45;
+            cursor: default;
+        }
+
+        .conector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1px 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #ff8fb3;
+        }
+
+        .linha-vazia {
+            margin: 0;
+            padding: 6px 0;
+            font-size: 0.78rem;
+            color: #b07a8f;
+        }
+
+        .acoes-playlist {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .botao-ouvir-playlist,
+        .botao-recomecar {
+            flex: 1 1 130px;
+            padding: 10px 8px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .botao-ouvir-playlist {
+            color: #d6336c;
+            background: #fff;
+            border: 1px solid #ffb3c6;
+        }
+
+        .botao-ouvir-playlist.tocando {
+            color: #fff;
+            background: #ff85a2;
+            border-color: #ff85a2;
+        }
+
+        .botao-recomecar {
+            color: #fff;
+            background: #ff4d88;
+            border: 1px solid #ff4d88;
+        }
+
+        .botao-ouvir-playlist:disabled,
+        .botao-recomecar:disabled {
+            opacity: 0.55;
+            cursor: default;
+        }
+
+        .musica-topo .nome {
+            margin-bottom: 2px;
+        }
+
+        .musica-topo .dica-trecho {
+            margin: 0 0 8px;
+        }
+
         .lista-musicas {
             display: flex;
             flex-direction: column;
@@ -581,6 +820,190 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
+        }
+
+        .trecho-musica {
+            margin-top: 10px;
+            padding: 10px;
+            background: #fff5f9;
+            border: 1px solid #ffe0ef;
+            border-radius: 10px;
+        }
+
+        .trecho-musica .campo-trecho {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin: 0 10px 0 0;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #a05a74;
+        }
+
+        .campos-trecho {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 10px;
+        }
+
+        .trecho-musica input[type="number"] {
+            width: 62px;
+            padding: 6px 8px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #d6336c;
+            text-align: center;
+            background: #fff;
+            border: 1px solid #ffb3c6;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .trecho-musica input[type="number"]:focus {
+            border-color: #ff4d88;
+            box-shadow: 0 0 0 3px rgba(255, 77, 136, 0.15);
+        }
+
+        .dica-trecho {
+            margin: 8px 0 0;
+            font-size: 0.74rem;
+            color: #b07a8f;
+        }
+
+        .acoes-trecho {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .acoes-trecho button {
+            flex: 1 1 auto;
+            padding: 7px 8px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: #d6336c;
+            background: #fff;
+            border: 1px solid #ffc2d6;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .acoes-trecho button.salvar-trecho {
+            color: #fff;
+            background: #ff4d88;
+            border-color: #ff4d88;
+        }
+
+        .acoes-trecho button:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        /* ---------- Onda da música (arrastar como no Instagram) ---------- */
+        .onda-musica {
+            position: relative;
+            height: 64px;
+            margin: 10px 0 4px;
+            padding: 6px;
+            background: #fff;
+            border: 1px solid #ffe0ef;
+            border-radius: 10px;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .onda-svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .onda-selecao {
+            position: absolute;
+            top: 2px;
+            bottom: 2px;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.34)) padding-box,
+                linear-gradient(90deg, #ffa62b, #ff2d95, #8b5cf6) border-box;
+            box-shadow: 0 5px 12px rgba(255, 45, 149, 0.22);
+            cursor: grab;
+            touch-action: none;
+        }
+
+        .onda-selecao.arrastando {
+            cursor: grabbing;
+        }
+
+        .onda-alca {
+            position: absolute;
+            top: 50%;
+            width: 12px;
+            height: 12px;
+            margin-top: -6px;
+            background: #fff;
+            border: 2px solid #ff2d95;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(214, 51, 108, 0.45);
+            cursor: ew-resize;
+            touch-action: none;
+        }
+
+        .onda-alca-esq {
+            left: -7px;
+        }
+
+        .onda-alca-dir {
+            right: -7px;
+        }
+
+        .onda-cursor {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            margin-left: -1px;
+            background: #ff2d95;
+            border-radius: 2px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .onda-dica {
+            position: absolute;
+            inset: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #b07a8f;
+            background: rgba(255, 255, 255, 0.72);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .onda-legenda {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin: 0 0 8px;
+            font-size: 0.72rem;
+            color: #b07a8f;
+        }
+
+        .onda-legenda strong {
+            color: #d6336c;
         }
 
         .botao-exportar {
@@ -729,6 +1152,7 @@
 
         .sobre-aba {
             flex: 1;
+            min-height: 44px;
             padding: 9px 6px;
             font-family: 'Quicksand', sans-serif;
             font-size: 0.78rem;
@@ -860,8 +1284,8 @@
             position: absolute;
             top: 6px;
             right: 6px;
-            width: 26px;
-            height: 26px;
+            width: 40px;
+            height: 40px;
             padding: 0;
             font-size: 0.8rem;
             line-height: 1;
@@ -933,6 +1357,48 @@
             transform: scale(1.1);
         }
 
+        .dica,
+        .contador-midia,
+        .linha-tempo-total,
+        .passo-tempo .info small,
+        .passo-tempo .alca-arraste,
+        .dica-trecho,
+        .onda-legenda,
+        .sobre-dica,
+        .mensagens-vazio,
+        .mensagem-item time,
+        .nota-exportar {
+            color: #794354;
+        }
+
+        #botaoSurpresa,
+        .carousel-buttons button,
+        #curtirBtn,
+        #descricaoBtn,
+        .aviso-sem-fotos button,
+        .aba.ativa,
+        .botao-ouvir-playlist.tocando,
+        .botao-recomecar,
+        .botao-enviar-mensagem,
+        .botao-exportar,
+        #modal-content button {
+            color: #fff;
+            background-color: #c2185b;
+        }
+
+        #botaoSurpresa:hover,
+        .carousel-buttons button:hover,
+        #curtirBtn:hover,
+        #descricaoBtn:hover,
+        .aviso-sem-fotos button:hover,
+        .botao-ouvir-playlist.tocando:hover,
+        .botao-recomecar:hover,
+        .botao-enviar-mensagem:hover,
+        .botao-exportar:hover,
+        #modal-content button:hover {
+            background-color: #a3154d;
+        }
+
         @media (max-width: 500px) {
             h1 {
                 font-size: 2.5rem;
@@ -982,6 +1448,83 @@
                 margin-top: 447px;
             }
         }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem 0.75rem;
+            }
+
+            #fotoProxima {
+                left: clamp(115px, calc(50vw - 45px), 180px);
+            }
+
+            #modalGerenciar {
+                align-items: flex-end;
+                padding: 0;
+            }
+
+            #painelGerenciar {
+                width: 100%;
+                max-height: 96vh;
+                max-height: 96dvh;
+                border-radius: 18px 18px 0 0;
+                padding-bottom: env(safe-area-inset-bottom, 0px);
+            }
+
+            .painel-topo {
+                padding: 8px 14px;
+            }
+
+            .painel-abas {
+                padding: 8px 14px 0;
+            }
+
+            .painel-corpo {
+                padding: 12px 14px 18px;
+            }
+
+            .botao-limpar {
+                min-height: 44px;
+                padding: 8px 12px;
+            }
+
+            .passo-tempo {
+                gap: 5px;
+                padding: 6px;
+            }
+
+            .passo-tempo .acoes-passo {
+                gap: 2px;
+            }
+
+            .sobre-abas {
+                position: sticky;
+                top: 0;
+                z-index: 1;
+            }
+
+            .caixa-sobre {
+                max-height: 94vh;
+                max-height: 94dvh;
+                padding-bottom: env(safe-area-inset-bottom, 0px);
+            }
+
+            .sobre-fechar {
+                min-width: 44px;
+                min-height: 44px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 
@@ -992,59 +1535,67 @@
     </div>
 
     <!-- Conteúdo Principal (inicialmente oculto) -->
-    <div id="conteudoPrincipal" style="display: none;">
+    <div id="conteudoPrincipal" aria-hidden="true" style="display: none;">
         <!-- Modal principal (Curtir) -->
-        <div id="modal">
-            <div id="modal-content">
-                <h2>✨ Oi, meu amor! ✨</h2>
+        <div id="modal" aria-hidden="true">
+            <div id="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalCurtirTitulo"
+                tabindex="-1">
+                <h2 id="modalCurtirTitulo">✨ Oi, meu amor! ✨</h2>
                 <p>Quero que saiba o quanto você é especial pra mim 💖</p>
                 <button onclick="fecharModal()">Fechar</button>
             </div>
         </div>
 
         <!-- Modal para Descrição / Mensagens -->
-        <div id="modalDescricao">
-            <div class="caixa-sobre" role="dialog" aria-modal="true" aria-label="Sobre nós e mensagens">
+        <div id="modalDescricao" aria-hidden="true">
+            <div class="caixa-sobre" role="dialog" aria-modal="true" aria-label="Sobre nós e mensagens" tabindex="-1">
                 <div class="sobre-topo">
                     <h2>💞 Sobre Nós</h2>
                     <button type="button" class="sobre-fechar" onclick="fecharDescricao()"
                         aria-label="Fechar">✕</button>
                 </div>
 
-                <div class="sobre-abas">
-                    <button type="button" class="sobre-aba ativa" data-sobre-aba="historia"
+                <div class="sobre-abas" role="tablist" aria-label="Seções sobre nós">
+                    <button type="button" class="sobre-aba ativa" role="tab" aria-selected="true" tabindex="0"
+                        aria-controls="abaSobreHistoria" id="tabSobreHistoria" data-sobre-aba="historia"
                         onclick="trocarAbaSobre('historia')">💞 História</button>
-                    <button type="button" class="sobre-aba" data-sobre-aba="arthur"
+                    <button type="button" class="sobre-aba" role="tab" aria-selected="false" tabindex="-1"
+                        aria-controls="abaSobreArthur" id="tabSobreArthur" data-sobre-aba="arthur"
                         onclick="trocarAbaSobre('arthur')">💌 Para o Arthur</button>
-                    <button type="button" class="sobre-aba" data-sobre-aba="rayane"
+                    <button type="button" class="sobre-aba" role="tab" aria-selected="false" tabindex="-1"
+                        aria-controls="abaSobreRayane" id="tabSobreRayane" data-sobre-aba="rayane"
                         onclick="trocarAbaSobre('rayane')">💌 Para a Rayane</button>
                 </div>
 
                 <div class="sobre-corpo">
-                    <div id="abaSobreHistoria">
+                    <div id="abaSobreHistoria" role="tabpanel" aria-labelledby="tabSobreHistoria">
                         <p class="sobre-texto">Queria agradecer por ser essa mulher e mãe incrível que cuida de mim e
                             da Luna. Obrigado pelos melhores momentos, carinhos e risadas. Sou muito feliz ao seu lado,
                             Te amo !!! 💕</p>
                     </div>
 
-                    <div id="abaSobreArthur" style="display: none;">
+                    <div id="abaSobreArthur" role="tabpanel" aria-labelledby="tabSobreArthur" aria-hidden="true"
+                        style="display: none;">
                         <p class="sobre-dica">Recadinhos para o Arthur: é aqui que ele lê o que você escreveu. As
                             mensagens ficam salvas para sempre 💖</p>
                         <div class="aviso-mensagens" style="display: none;"></div>
                         <form class="form-mensagem" onsubmit="enviarMensagemDoForm(event, 'arthur'); return false;">
                             <textarea id="textoMensagemArthur" maxlength="1000" rows="3"
+                                aria-label="Mensagem para o Arthur"
                                 placeholder="Escreva uma mensagem para o Arthur..."></textarea>
                             <button type="submit" class="botao-enviar-mensagem">Enviar 💌</button>
                         </form>
                         <div id="listaMensagensArthur" class="lista-mensagens"></div>
                     </div>
 
-                    <div id="abaSobreRayane" style="display: none;">
+                    <div id="abaSobreRayane" role="tabpanel" aria-labelledby="tabSobreRayane" aria-hidden="true"
+                        style="display: none;">
                         <p class="sobre-dica">Recadinhos para a Rayane: é aqui que ela lê o que você escreveu. As
                             mensagens ficam salvas para sempre 💖</p>
                         <div class="aviso-mensagens" style="display: none;"></div>
                         <form class="form-mensagem" onsubmit="enviarMensagemDoForm(event, 'rayane'); return false;">
                             <textarea id="textoMensagemRayane" maxlength="1000" rows="3"
+                                aria-label="Mensagem para a Rayane"
                                 placeholder="Escreva uma mensagem para a Rayane..."></textarea>
                             <button type="submit" class="botao-enviar-mensagem">Enviar 💌</button>
                         </form>
@@ -1071,8 +1622,8 @@
                     <button type="button" onclick="irParaAdicionarFotos()">Adicionar fotos</button>
                 </div>
                 <div class="carousel-buttons">
-                    <button onclick="anterior()">⟨</button>
-                    <button onclick="proxima()">⟩</button>
+                    <button type="button" onclick="anterior()" aria-label="Foto anterior">⟨</button>
+                    <button type="button" onclick="proxima()" aria-label="Próxima foto">⟩</button>
                 </div>
             </div>
 
@@ -1084,32 +1635,35 @@
         </div>
 
         <!-- Player de Música centralizado abaixo da foto principal -->
-        <audio id="musica" controls preload="auto"></audio>
+        <audio id="musica" controls preload="none" aria-label="Player de música do site"></audio>
         <div id="listaMusicasApp" class="lista-musicas-app"></div>
 
         <!-- Abre o painel de gerenciamento -->
         <button id="btnGerenciar" type="button" onclick="abrirGerenciar()">⚙️ Gerenciar fotos e músicas</button>
 
         <!-- Painel de gerenciamento -->
-        <div id="modalGerenciar">
-            <div id="painelGerenciar" role="dialog" aria-modal="true" aria-label="Gerenciar fotos e músicas">
+        <div id="modalGerenciar" aria-hidden="true">
+            <div id="painelGerenciar" role="dialog" aria-modal="true" aria-label="Gerenciar fotos e músicas"
+                tabindex="-1">
                 <div class="painel-topo">
                     <h2>Nossas mídias</h2>
                     <button type="button" class="painel-fechar" onclick="fecharGerenciar()"
                         aria-label="Fechar">✕</button>
                 </div>
 
-                <div class="painel-abas">
-                    <button type="button" class="aba ativa" data-aba="fotos"
+                <div class="painel-abas" role="tablist" aria-label="Gerenciar mídias">
+                    <button type="button" class="aba ativa" role="tab" aria-selected="true" tabindex="0"
+                        aria-controls="abaFotos" id="tabFotos" data-aba="fotos"
                         onclick="trocarAba('fotos')">📷 Fotos</button>
-                    <button type="button" class="aba" data-aba="musicas"
+                    <button type="button" class="aba" role="tab" aria-selected="false" tabindex="-1"
+                        aria-controls="abaMusicas" id="tabMusicas" data-aba="musicas"
                         onclick="trocarAba('musicas')">🎵 Músicas</button>
                 </div>
 
-                <div class="painel-corpo">
-                    <div id="statusNuvem" class="status-nuvem"></div>
+                <div class="painel-corpo" aria-busy="false">
+                    <div id="statusNuvem" class="status-nuvem" role="status" aria-live="polite"></div>
 
-                    <div id="abaFotos">
+                    <div id="abaFotos" role="tabpanel" aria-labelledby="tabFotos">
                         <p class="dica">Toque em <strong>Trocar</strong> para substituir uma foto, no 🗑 para remover,
                             ou adicione novas (até 25). Você também pode arrastar imagens para a grade.</p>
                         <div class="linha-contador">
@@ -1124,14 +1678,31 @@
                             onclick="restaurarFotos()">↺ Restaurar as 25 fotos originais</button>
                     </div>
 
-                    <div id="abaMusicas" style="display: none;">
-                        <p class="dica">Você pode ter até 3 músicas. Toque em <strong>Trocar</strong> para substituir
-                            uma música ou no 🗑 para remover.</p>
+                    <div id="abaMusicas" role="tabpanel" aria-labelledby="tabMusicas" aria-hidden="true"
+                        style="display: none;">
+                        <p class="dica">Você pode ter até 3 músicas. <strong>Arraste a onda</strong> para escolher de onde
+                            a música começa e por quantos segundos toca (a música do site pausa enquanto você edita).
+                            Use <strong>▶ Ouvir playlist</strong> para conferir a sequência e
+                            <strong>🔄 Trocar</strong> / 🗑 para substituir ou remover.</p>
                         <div class="linha-contador">
                             <p class="contador-midia" id="contadorMusicas"></p>
                             <button type="button" class="botao-limpar" id="btnLimparMusicas"
                                 onclick="limparMusicas()">🧹 Remover todas</button>
                         </div>
+                        <div id="linhaTempoBox" class="linha-tempo">
+                            <div class="linha-tempo-topo">
+                                <span class="linha-tempo-titulo">🎬 Linha do tempo • arraste ⠿ para reordenar</span>
+                                <span class="linha-tempo-total" id="totalTempo"></span>
+                            </div>
+                            <div class="linha-tempo-passos" id="linhaTempo"></div>
+                            <div class="acoes-playlist">
+                                <button type="button" class="botao-ouvir-playlist" id="btnOuvirPlaylist"
+                                    onclick="alternarOuvirPlaylist()">▶ Ouvir playlist</button>
+                                <button type="button" class="botao-recomecar" id="btnRecomecar"
+                                    onclick="recomecarPlaylist()">🔁 Recomeçar do início</button>
+                            </div>
+                        </div>
+
                         <div class="lista-musicas" id="listaMusicas"></div>
                         <button type="button" class="botao-adicionar" id="btnAddMusicas"
                             onclick="document.getElementById('inputAddMusicas').click()">➕ Adicionar música</button>
@@ -1322,6 +1893,11 @@
         let musicaIndex = 0;
         let indiceTrocaFoto = null;
         let indiceTrocaMusica = null;
+        let indiceEditorMusica = null;
+        let abaGerenciadorAtual = "fotos";
+        let sessaoAbaMusicas = null;
+        let focoGerenciarAnterior = null;
+        let focoDescricaoAnterior = null;
         let enviando = false;
         let nuvemIndisponivel = false;
 
@@ -1359,6 +1935,9 @@
             if (!toast) {
                 toast = document.createElement("div");
                 toast.id = "toast";
+                toast.setAttribute("role", "status");
+                toast.setAttribute("aria-live", "polite");
+                toast.setAttribute("aria-atomic", "true");
                 document.body.appendChild(toast);
             }
             toast.textContent = mensagem;
@@ -1454,7 +2033,7 @@
             return {
                 atualizadoEm: new Date().toISOString(),
                 fotos: FOTOS_PADRAO.map(arquivo => ({ arquivo: arquivo, nome: baseNome(arquivo), origem: "site" })),
-                musicas: [{ arquivo: MUSICA_PADRAO, nome: MUSICA_PADRAO, origem: "site" }]
+                musicas: [{ arquivo: MUSICA_PADRAO, nome: MUSICA_PADRAO, origem: "site", inicio: 0, duracao: null }]
             };
         }
 
@@ -1477,7 +2056,9 @@
                 .map(item => ({
                     arquivo: item.arquivo,
                     nome: item.nome || baseNome(item.arquivo),
-                    origem: item.origem === "storage" ? "storage" : "site"
+                    origem: item.origem === "storage" ? "storage" : "site",
+                    inicio: Number(item.inicio) > 0 ? Number(item.inicio) : 0,
+                    duracao: Number(item.duracao) > 0 ? Number(item.duracao) : null
                 }));
         }
 
@@ -1488,7 +2069,11 @@
                     arquivo: item.arquivo, nome: item.nome, origem: item.origem
                 })),
                 musicas: (novasMusicas || musicas).map(item => ({
-                    arquivo: item.arquivo, nome: item.nome, origem: item.origem
+                    arquivo: item.arquivo,
+                    nome: item.nome,
+                    origem: item.origem,
+                    inicio: Number(item.inicio) > 0 ? Number(item.inicio) : 0,
+                    duracao: Number(item.duracao) > 0 ? Number(item.duracao) : null
                 }))
             };
         }
@@ -1572,6 +2157,7 @@
         async function executar(texto, acao) {
             if (enviando) return false;
             enviando = true;
+            document.querySelector(".painel-corpo").setAttribute("aria-busy", "true");
             atualizarStatusNuvem();
             avisar(texto, 60000);
             try {
@@ -1583,6 +2169,7 @@
                 return false;
             } finally {
                 enviando = false;
+                document.querySelector(".painel-corpo").setAttribute("aria-busy", "false");
                 atualizarStatusNuvem();
             }
         }
@@ -1633,8 +2220,105 @@
         const audioMusica = document.getElementById("musica");
         const listaMusicasApp = document.getElementById("listaMusicasApp");
 
+        /* ---------- Trecho escolhido (de onde começa e quanto toca) ---------- */
+        function inicioDaMusicaAtual() {
+            const item = musicas[musicaIndex];
+            const valor = item && Number(item.inicio) > 0 ? Number(item.inicio) : 0;
+            return valor > 0 ? valor : 0;
+        }
+
+        function duracaoDaMusicaAtual() {
+            const item = musicas[musicaIndex];
+            const valor = item && Number(item.duracao) > 0 ? Number(item.duracao) : 0;
+            return valor > 0 ? valor : 0;
+        }
+
+        function aguardarMetadata(audio) {
+            if (audio.readyState >= 1) return Promise.resolve();
+            return new Promise(resolver => {
+                let resolvido = false;
+                const terminar = () => {
+                    if (resolvido) return;
+                    resolvido = true;
+                    audio.removeEventListener("loadedmetadata", terminar);
+                    resolver();
+                };
+                audio.addEventListener("loadedmetadata", terminar);
+                setTimeout(terminar, 4000);
+            });
+        }
+
+        function tocarTrechoAtual() {
+            if (!musicasSrc.length) return;
+            const inicio = inicioDaMusicaAtual();
+            const src = musicasSrc[musicaIndex];
+            if (!src) return;
+
+            if (audioMusica.dataset.srcAtual !== src) {
+                audioMusica.src = src;
+                audioMusica.dataset.srcAtual = src;
+                audioMusica.load();
+            }
+
+            const aplicarInicio = () => {
+                if (audioMusica.duration > 1) {
+                    try {
+                        audioMusica.currentTime = inicio < audioMusica.duration ? inicio : 0;
+                    } catch (erro) { }
+                }
+                tocarJa(audioMusica);
+            };
+
+            if (audioMusica.readyState >= 1) {
+                aplicarInicio();
+                return;
+            }
+
+            // Play imediato para o navegador liberar o som;
+            // depois pula para o segundo escolhido quando a mídia estiver pronta.
+            tocarJa(audioMusica);
+            aguardarMetadata(audioMusica).then(aplicarInicio);
+        }
+
+        function avancarMusica() {
+            if (musicasSrc.length > 1) {
+                musicaIndex = (musicaIndex + 1) % musicasSrc.length;
+                atualizarMusica();
+                tocarTrechoAtual();
+            } else if (musicasSrc.length === 1) {
+                audioMusica.currentTime = inicioDaMusicaAtual();
+                tocarJa(audioMusica);
+            }
+        }
+
+        // Ao chegar no fim do trecho escolhido, passa para a próxima música
+        audioMusica.addEventListener("timeupdate", () => {
+            const duracao = duracaoDaMusicaAtual();
+            if (!duracao || audioMusica.paused) return;
+            const inicio = inicioDaMusicaAtual();
+            if (audioMusica.currentTime >= inicio + duracao - 0.15) avancarMusica();
+        });
+
+        // Atualiza o destaque da linha do tempo ao tocar/pausar
+        audioMusica.addEventListener("play", renderizarLinhaTempo);
+        audioMusica.addEventListener("pause", renderizarLinhaTempo);
+
+        // Sempre começa no segundo escolhido
+        audioMusica.addEventListener("loadedmetadata", () => {
+            const inicio = inicioDaMusicaAtual();
+            const total = audioMusica.duration;
+            if (!isFinite(total) || total <= 0) return;
+            const alvo = inicio < total ? inicio : 0;
+            if (alvo > 0) {
+                try {
+                    audioMusica.currentTime = alvo;
+                } catch (erro) { }
+            }
+        });
+
         function atualizarMusica() {
             listaMusicasApp.innerHTML = "";
+            renderizarLinhaTempo();
 
             if (musicasSrc.length === 0) {
                 audioMusica.style.display = "none";
@@ -1663,9 +2347,8 @@
                     botao.title = musica.nome || "Música " + (i + 1);
                     botao.onclick = () => {
                         musicaIndex = i;
-                        delete audioMusica.dataset.srcAtual;
                         atualizarMusica();
-                        audioMusica.play().catch(() => { });
+                        tocarTrechoAtual();
                     };
                     listaMusicasApp.appendChild(botao);
                 });
@@ -1674,22 +2357,12 @@
             }
         }
 
-        audioMusica.addEventListener("ended", () => {
-            if (musicasSrc.length > 1) {
-                musicaIndex = (musicaIndex + 1) % musicasSrc.length;
-                delete audioMusica.dataset.srcAtual;
-                atualizarMusica();
-                audioMusica.play().catch(() => { });
-            } else if (musicasSrc.length === 1) {
-                audioMusica.currentTime = 0;
-                audioMusica.play().catch(() => { });
-            }
-        });
+        audioMusica.addEventListener("ended", avancarMusica);
 
         // Função para iniciar a música (usada na transição da tela de abertura)
         function tocarMusica() {
             if (!musicasSrc.length) return;
-            audioMusica.play().catch(() => { });
+            tocarTrechoAtual();
         }
 
         // Tela de Abertura: transição suave para a página principal e início da música
@@ -1699,27 +2372,46 @@
             setTimeout(() => {
                 document.getElementById("telaAbertura").style.display = "none";
                 document.getElementById("conteudoPrincipal").style.display = "block";
+                document.getElementById("conteudoPrincipal").setAttribute("aria-hidden", "false");
                 tocarMusica();
             }, 1000);
         }
 
         document.getElementById("botaoSurpresa").addEventListener("click", iniciarPagina);
 
-        setInterval(proxima, 4000);
+        let intervaloFotos = setInterval(proxima, 4000);
 
         /* ============================================================
            PAINEL DE GERENCIAMENTO
            ============================================================ */
         function abrirGerenciar() {
+            focoGerenciarAnterior = document.activeElement;
             atualizarStatusNuvem();
             renderizarPainelFotos();
             renderizarPainelMusicas();
             document.getElementById("modalGerenciar").style.display = "flex";
+            document.getElementById("modalGerenciar").setAttribute("aria-hidden", "false");
+            document.querySelector("#painelGerenciar .painel-fechar").focus();
+            if (abaGerenciadorAtual === "musicas" && !sessaoAbaMusicas) entrarNaAbaMusicas();
             recarregarBiblioteca();
         }
 
         function fecharGerenciar() {
-            document.getElementById("modalGerenciar").style.display = "none";
+            const modal = document.getElementById("modalGerenciar");
+            if (modal.style.display === "none") return;
+            sairDaAbaMusicas();
+            modal.style.display = "none";
+            modal.setAttribute("aria-hidden", "true");
+            pararPreviaPlaylist(true);
+            document.querySelectorAll("#listaMusicas audio").forEach(audio => {
+                try {
+                    audio.pause();
+                } catch (erro) { }
+            });
+            if (focoGerenciarAnterior && typeof focoGerenciarAnterior.focus === "function") {
+                focoGerenciarAnterior.focus();
+            }
+            focoGerenciarAnterior = null;
         }
 
         function irParaAdicionarFotos() {
@@ -1728,14 +2420,48 @@
         }
 
         function trocarAba(aba) {
+            if (aba === abaGerenciadorAtual) return;
+            if (aba === "musicas") entrarNaAbaMusicas();
+            else sairDaAbaMusicas();
+
             const abas = { fotos: "abaFotos", musicas: "abaMusicas" };
             Object.keys(abas).forEach(nome => {
                 const elemento = document.getElementById(abas[nome]);
-                if (elemento) elemento.style.display = (nome === aba) ? "" : "none";
+                if (elemento) {
+                    elemento.style.display = (nome === aba) ? "" : "none";
+                    elemento.setAttribute("aria-hidden", nome === aba ? "false" : "true");
+                }
             });
             document.querySelectorAll(".aba").forEach(botao => {
-                botao.classList.toggle("ativa", botao.dataset.aba === aba);
+                const selecionada = botao.dataset.aba === aba;
+                botao.classList.toggle("ativa", selecionada);
+                botao.setAttribute("aria-selected", String(selecionada));
+                botao.tabIndex = selecionada ? 0 : -1;
             });
+            abaGerenciadorAtual = aba;
+        }
+
+        function entrarNaAbaMusicas() {
+            sessaoAbaMusicas = {
+                tocando: !audioMusica.paused && !audioMusica.ended,
+                alterada: false
+            };
+            pararPreviaPlaylist(true);
+            pausarMusicaPrincipal();
+        }
+
+        function sairDaAbaMusicas() {
+            if (!sessaoAbaMusicas) return;
+
+            const retomar = sessaoAbaMusicas.tocando && !sessaoAbaMusicas.alterada;
+            sessaoAbaMusicas = null;
+            pararPreviaPlaylist(true);
+            document.querySelectorAll("#listaMusicas audio").forEach(audio => audio.pause());
+            if (retomar && musicasSrc.length && !audioMusica.ended) tocarJa(audioMusica);
+        }
+
+        function marcarAbaMusicasAlterada() {
+            if (sessaoAbaMusicas) sessaoAbaMusicas.alterada = true;
         }
 
         function atualizarStatusNuvem() {
@@ -1800,6 +2526,7 @@
                 const btnTrocar = document.createElement("button");
                 btnTrocar.type = "button";
                 btnTrocar.textContent = "🔄 Trocar";
+                btnTrocar.setAttribute("aria-label", "Trocar " + (entrada.nome || "foto"));
                 btnTrocar.disabled = !podeEditar || enviando;
                 btnTrocar.onclick = () => escolherFotoParaTrocar(i);
 
@@ -1808,6 +2535,7 @@
                 btnRemover.className = "btn-remover";
                 btnRemover.textContent = "🗑";
                 btnRemover.title = "Remover foto";
+                btnRemover.setAttribute("aria-label", "Remover " + (entrada.nome || "foto"));
                 btnRemover.disabled = !podeEditar || enviando;
                 btnRemover.onclick = () => removerFoto(i);
 
@@ -1815,6 +2543,684 @@
                 item.append(img, indice, acoes);
                 grade.appendChild(item);
             });
+        }
+
+        /* ============================================================
+           DURAÇÃO DAS MÚSICAS (guarda para o editor abrir na hora)
+           ============================================================ */
+        let duracoesConhecidas = {};
+        try {
+            duracoesConhecidas = JSON.parse(localStorage.getItem("nossa-data-duracoes") || "{}") || {};
+        } catch (erro) {
+            duracoesConhecidas = {};
+        }
+
+        function duracaoGuardada(src) {
+            const valor = Number(duracoesConhecidas[src]);
+            return isFinite(valor) && valor > 1 ? valor : 0;
+        }
+
+        function guardarDuracao(src, segundos) {
+            if (!src || !isFinite(segundos) || segundos <= 1) return;
+            const anterior = Number(duracoesConhecidas[src]) || 0;
+            if (Math.abs(anterior - segundos) < 0.6) return;
+            duracoesConhecidas[src] = Math.round(segundos * 10) / 10;
+            try {
+                localStorage.setItem("nossa-data-duracoes", JSON.stringify(duracoesConhecidas));
+            } catch (erro) { }
+        }
+
+        function totalDaMusica(audio, src) {
+            if (audio && isFinite(audio.duration) && audio.duration > 1) return audio.duration;
+            return duracaoGuardada(src);
+        }
+
+        // O navegador só libera som dentro do clique: então damos play na hora
+        function tocarJa(audio) {
+            try {
+                const promessa = audio.play();
+                if (promessa && promessa.catch) promessa.catch(() => { });
+                return promessa;
+            } catch (erro) {
+                return null;
+            }
+        }
+
+        function irParaSegundo(audio, segundo) {
+            const total = audio.duration;
+            if (!isFinite(total) || total <= 1) return;
+            const alvo = segundo > 0 && segundo < total ? segundo : 0;
+            if (alvo <= 0) return;
+            try {
+                audio.currentTime = alvo;
+            } catch (erro) { }
+        }
+
+        /* ============================================================
+           OUVIR A PLAYLIST DENTRO DO PAINEL
+           ============================================================ */
+        const audioPrevia = new Audio();
+        audioPrevia.preload = "auto";
+
+        let previaAtiva = false;
+        let previaIndice = -1;
+        let previaPedido = 0;
+
+        function pausarMusicaPrincipal() {
+            if (!audioMusica.paused) {
+                try {
+                    audioMusica.pause();
+                } catch (erro) { }
+            }
+        }
+
+        function atualizarBotaoPlaylist() {
+            const botao = document.getElementById("btnOuvirPlaylist");
+            const recomecar = document.getElementById("btnRecomecar");
+            if (botao) {
+                botao.textContent = previaAtiva ? "⏹ Parar playlist" : "▶ Ouvir playlist";
+                botao.classList.toggle("tocando", previaAtiva);
+                botao.disabled = !nuvemConfigurada() || !musicas.length || enviando;
+            }
+            if (recomecar) recomecar.disabled = !nuvemConfigurada() || !musicas.length || enviando;
+        }
+
+        function pararPreviaPlaylist(semAviso) {
+            previaPedido++;
+            previaAtiva = false;
+            previaIndice = -1;
+            try {
+                audioPrevia.pause();
+            } catch (erro) { }
+            audioPrevia.muted = false;
+            atualizarBotaoPlaylist();
+            renderizarLinhaTempo();
+            if (!semAviso) avisar("Playlist pausada.", 2500);
+        }
+
+        function tocarTrechoDaPrevia(indice, pedido) {
+            return new Promise(resolver => {
+                const entrada = musicas[indice];
+                const src = musicasSrc[indice];
+                if (!entrada || !src) return resolver();
+
+                let encerrado = false;
+                const terminar = () => {
+                    if (encerrado) return;
+                    encerrado = true;
+                    audioPrevia.removeEventListener("timeupdate", aoAndar);
+                    audioPrevia.removeEventListener("ended", terminar);
+                    audioPrevia.removeEventListener("error", terminar);
+                    try {
+                        audioPrevia.pause();
+                    } catch (erro) { }
+                    audioPrevia.muted = false;
+                    resolver();
+                };
+                const aoAndar = () => {
+                    if (pedido !== previaPedido) return terminar();
+                    const inicio = Math.max(0, Number(entrada.inicio) || 0);
+                    const duracao = Math.max(0, Number(entrada.duracao) || 0);
+                    if (duracao > 0 && audioPrevia.currentTime >= inicio + duracao - 0.12) terminar();
+                };
+
+                const inicio = Math.max(0, Number(entrada.inicio) || 0);
+                if (audioPrevia.dataset.srcAtual !== src) {
+                    audioPrevia.dataset.srcAtual = src;
+                    audioPrevia.src = src;
+                    audioPrevia.load();
+                }
+
+                audioPrevia.addEventListener("timeupdate", aoAndar);
+                audioPrevia.addEventListener("ended", terminar);
+                audioPrevia.addEventListener("error", terminar);
+
+                const tocar = () => {
+                    if (pedido !== previaPedido) return terminar();
+                    if (audioPrevia.duration > 1) {
+                        try {
+                            audioPrevia.currentTime = inicio < audioPrevia.duration ? inicio : 0;
+                        } catch (erro) { }
+                    }
+                    audioPrevia.muted = false;
+                    tocarJa(audioPrevia);
+                };
+
+                if (audioPrevia.readyState >= 1 && isFinite(audioPrevia.duration)) {
+                    tocar();
+                } else {
+                    // Garante que o navegador libere o áudio no clique do botão
+                    // e depois move para o trecho escolhido quando a mídia carregar.
+                    audioPrevia.muted = false;
+                    tocarJa(audioPrevia);
+                    aguardarMetadata(audioPrevia).then(tocar);
+                }
+            });
+        }
+
+        async function alternarOuvirPlaylist() {
+            if (previaAtiva) {
+                pararPreviaPlaylist(true);
+                return;
+            }
+            if (!musicas.length) {
+                avisar("Adicione pelo menos uma música para ouvir a playlist.");
+                return;
+            }
+
+            pausarMusicaPrincipal();
+            const pedido = ++previaPedido;
+            previaIndice = 0;
+            previaAtiva = true;
+            atualizarBotaoPlaylist();
+            renderizarLinhaTempo();
+
+            for (let i = 0; i < musicas.length; i++) {
+                if (pedido !== previaPedido || !previaAtiva) return;
+                previaIndice = i;
+                renderizarLinhaTempo();
+                await tocarTrechoDaPrevia(i, pedido);
+                if (pedido !== previaPedido) return;
+                await new Promise(pronto => setTimeout(pronto, 150));
+            }
+
+            previaAtiva = false;
+            previaIndice = -1;
+            atualizarBotaoPlaylist();
+            renderizarLinhaTempo();
+            avisar("Fim da playlist 💖", 3000);
+        }
+
+        /* ---------- Onda desenhada (arrastar para escolher o trecho) ---------- */
+        function alturasDaOnda(semente) {
+            let codigo = 2166136261;
+            const texto = String(semente || "musica");
+            for (let i = 0; i < texto.length; i++) {
+                codigo ^= texto.charCodeAt(i);
+                codigo = Math.imul(codigo, 16777619);
+            }
+
+            const alturas = [];
+            for (let i = 0; i < 58; i++) {
+                codigo ^= codigo << 13;
+                codigo ^= codigo >>> 17;
+                codigo ^= codigo << 5;
+                const sorte = Math.abs(codigo % 1000) / 1000;
+                alturas.push(14 + Math.round(sorte * 40));
+            }
+            return alturas;
+        }
+
+        function criarOndaSvg(semente) {
+            const ns = "http://www.w3.org/2000/svg";
+            const alturas = alturasDaOnda(semente);
+            const passo = 6;
+            const svg = document.createElementNS(ns, "svg");
+            svg.setAttribute("class", "onda-svg");
+            svg.setAttribute("viewBox", "0 0 " + (alturas.length * passo) + " 54");
+            svg.setAttribute("preserveAspectRatio", "none");
+            svg.setAttribute("aria-hidden", "true");
+
+            alturas.forEach((altura, i) => {
+                const barra = document.createElementNS(ns, "rect");
+                barra.setAttribute("x", String(i * passo));
+                barra.setAttribute("y", String((54 - altura) / 2));
+                barra.setAttribute("width", "3.4");
+                barra.setAttribute("height", String(altura));
+                barra.setAttribute("rx", "1.6");
+                barra.setAttribute("fill", "#ffc2d6");
+                svg.appendChild(barra);
+            });
+            return svg;
+        }
+
+        function totalDaOnda(audio, alternativa) {
+            const total = audio && audio.duration;
+            if (isFinite(total) && total > 1) return total;
+            const guardada = Number(alternativa) || 0;
+            return isFinite(guardada) && guardada > 1 ? guardada : 0;
+        }
+
+        function limitar(valor, minimo, maximo) {
+            return Math.min(Math.max(valor, minimo), maximo);
+        }
+
+        function criarEditorOnda(player, entrada, src, inputInicio, inputDuracao, legenda, podeEditar) {
+            const onda = document.createElement("div");
+            onda.className = "onda-musica";
+
+            onda.appendChild(criarOndaSvg(entrada.nome || entrada.arquivo));
+
+            const selecao = document.createElement("div");
+            selecao.className = "onda-selecao";
+
+            const alcaEsq = document.createElement("span");
+            alcaEsq.className = "onda-alca onda-alca-esq";
+            const alcaDir = document.createElement("span");
+            alcaDir.className = "onda-alca onda-alca-dir";
+            selecao.append(alcaEsq, alcaDir);
+
+            const cursor = document.createElement("div");
+            cursor.className = "onda-cursor";
+
+            const dica = document.createElement("div");
+            dica.className = "onda-dica";
+            dica.textContent = "Arraste para escolher o trecho";
+
+            onda.append(selecao, cursor, dica);
+
+            function lerInicio() {
+                return Math.max(0, Math.round(Number(inputInicio.value) || 0));
+            }
+
+            function lerDuracao() {
+                return Math.max(0, Math.round(Number(inputDuracao.value) || 0));
+            }
+
+            function desenhar() {
+                const total = totalDaOnda(player, duracaoGuardada(src));
+                if (!total) {
+                    selecao.style.display = "none";
+                    dica.style.display = "flex";
+                    dica.textContent = "Carregando a música...";
+                    legenda.innerHTML = "";
+                    return;
+                }
+
+                selecao.style.display = "";
+                dica.style.display = "none";
+
+                const inicio = limitar(lerInicio(), 0, total);
+                const duracao = lerDuracao();
+                const fim = duracao > 0 ? limitar(inicio + duracao, inicio, total) : total;
+
+                selecao.style.left = (inicio / total * 100) + "%";
+                selecao.style.width = (Math.max(fim - inicio, total * 0.01) / total * 100) + "%";
+
+                legenda.innerHTML = "";
+                const de = document.createElement("span");
+                de.innerHTML = "Começa em <strong>" + formatarSegundos(inicio) + "</strong>";
+                const ate = document.createElement("span");
+                ate.innerHTML = duracao > 0
+                    ? "termina em <strong>" + formatarSegundos(inicio + duracao) + "</strong>"
+                    : "vai <strong>até o fim</strong>";
+                legenda.append(de, ate);
+            }
+
+            let arraste = null;
+
+            onda.addEventListener("pointerdown", evento => {
+                if (!podeEditar || enviando) return;
+                if (!(isFinite(player.duration) && player.duration > 1)) {
+                    avisar("Ainda carregando a música... tente arrastar em instantes.", 2500);
+                    return;
+                }
+                const caixa = onda.getBoundingClientRect();
+                const total = totalDaOnda(player);
+                const segundo = limitar((evento.clientX - caixa.left) / caixa.width * total, 0, total);
+
+                let inicio = lerInicio();
+                let duracao = lerDuracao();
+
+                if (duracao <= 0) {
+                    duracao = Math.min(20, Math.max(1, Math.round(total)));
+                    inicio = limitar(segundo - duracao / 2, 0, Math.max(0, total - duracao));
+                    inputInicio.value = String(Math.round(inicio));
+                    inputDuracao.value = String(Math.round(duracao));
+                }
+
+                let fim = limitar(inicio + duracao, inicio + 1, total);
+                const alvo = evento.target.closest(".onda-alca");
+                let modo = "mover";
+                if (alvo === alcaEsq) modo = "inicio";
+                else if (alvo === alcaDir) modo = "fim";
+                else if (segundo < inicio || segundo > fim) {
+                    const largura = fim - inicio;
+                    inicio = limitar(segundo - largura / 2, 0, Math.max(0, total - largura));
+                    fim = inicio + largura;
+                    inputInicio.value = String(Math.round(inicio));
+                    inputDuracao.value = String(Math.max(1, Math.round(fim - inicio)));
+                }
+
+                arraste = { modo, x: evento.clientX, inicio, fim };
+                selecao.classList.add("arrastando");
+                try {
+                    onda.setPointerCapture(evento.pointerId);
+                } catch (erro) { }
+                desenhar();
+                evento.preventDefault();
+            });
+
+            onda.addEventListener("pointermove", evento => {
+                if (!arraste) return;
+                const caixa = onda.getBoundingClientRect();
+                const total = totalDaOnda(player);
+                const andou = (evento.clientX - arraste.x) / caixa.width * total;
+
+                let inicio = arraste.inicio;
+                let fim = arraste.fim;
+
+                if (arraste.modo === "mover") {
+                    const largura = arraste.fim - arraste.inicio;
+                    inicio = limitar(Math.round(arraste.inicio + andou), 0, Math.max(0, total - largura));
+                    fim = inicio + largura;
+                } else if (arraste.modo === "inicio") {
+                    inicio = limitar(Math.round(arraste.inicio + andou), 0, arraste.fim - 1);
+                    fim = arraste.fim;
+                } else {
+                    fim = limitar(Math.round(arraste.fim + andou), arraste.inicio + 1, total);
+                    inicio = arraste.inicio;
+                }
+
+                inputInicio.value = String(Math.round(inicio));
+                inputDuracao.value = String(Math.max(1, Math.round(fim - inicio)));
+                desenhar();
+                evento.preventDefault();
+            });
+
+            function soltar(evento) {
+                if (!arraste) return;
+                arraste = null;
+                selecao.classList.remove("arrastando");
+                try {
+                    onda.releasePointerCapture(evento.pointerId);
+                } catch (erro) { }
+
+                const inicio = lerInicio();
+                if (isFinite(player.duration) && inicio < player.duration) {
+                    try {
+                        player.currentTime = inicio;
+                    } catch (erro) { }
+                }
+                player.pause();
+            }
+
+            onda.addEventListener("pointerup", soltar);
+            onda.addEventListener("pointercancel", soltar);
+
+            inputInicio.addEventListener("input", desenhar);
+            inputDuracao.addEventListener("input", desenhar);
+            player.addEventListener("loadedmetadata", () => {
+                guardarDuracao(src, player.duration);
+                desenhar();
+            });
+            player.addEventListener("timeupdate", () => {
+                const total = totalDaOnda(player);
+                const posicao = limitar(player.currentTime / total, 0, 1);
+                cursor.style.left = (posicao * 100) + "%";
+                cursor.style.opacity = player.paused ? "0" : "1";
+            });
+            player.addEventListener("pause", () => {
+                cursor.style.opacity = "0";
+            });
+
+            desenhar();
+            return onda;
+        }
+
+        function renderizarLinhaTempo() {
+            const trilha = document.getElementById("linhaTempo");
+            const totalEl = document.getElementById("totalTempo");
+            if (!trilha) return;
+
+            trilha.innerHTML = "";
+
+            if (!musicas.length) {
+                const vazio = document.createElement("p");
+                vazio.className = "linha-vazia";
+                vazio.textContent = "Nenhum trecho na playlist ainda. Adicione uma música abaixo.";
+                trilha.appendChild(vazio);
+                if (totalEl) totalEl.textContent = "";
+                atualizarBotaoPlaylist();
+                return;
+            }
+
+            let totalSegundos = 0;
+            let temMusicaInteira = false;
+            const emDestaque = previaAtiva && previaIndice >= 0 ? previaIndice : musicaIndex;
+
+            musicas.forEach((entrada, i) => {
+                const duracao = Math.round(Number(entrada.duracao) || 0);
+                if (duracao > 0) totalSegundos += duracao;
+                else temMusicaInteira = true;
+
+                const passo = document.createElement("div");
+                passo.className = "passo-tempo" + (i === emDestaque ? " atual" : "");
+                passo.setAttribute("aria-current", i === emDestaque ? "step" : "false");
+
+                const numero = document.createElement("span");
+                numero.className = "numero";
+                numero.textContent = String(i + 1);
+
+                const alcaArraste = document.createElement("button");
+                alcaArraste.type = "button";
+                alcaArraste.className = "alca-arraste";
+                alcaArraste.textContent = "⠿";
+                alcaArraste.title = "Arraste ou use as setas para mudar a ordem";
+                alcaArraste.setAttribute("aria-label",
+                    "Mover " + (entrada.nome || "música") + ", posição " + (i + 1) +
+                    " de " + musicas.length + ". Use as setas para mudar a ordem.");
+                alcaArraste.setAttribute("aria-keyshortcuts", "ArrowUp ArrowDown");
+                alcaArraste.setAttribute("data-reorder-index", String(i));
+                alcaArraste.disabled = !nuvemConfigurada() || enviando;
+                configurarArrasteLinhaTempo(alcaArraste, passo, i);
+
+                const info = document.createElement("div");
+                info.className = "info";
+                const titulo = document.createElement("strong");
+                titulo.textContent = entrada.nome || "Música " + (i + 1);
+                const detalhe = document.createElement("small");
+                detalhe.textContent = descreverTrecho(entrada);
+                info.append(titulo, detalhe);
+
+                const acoesPasso = document.createElement("div");
+                acoesPasso.className = "acoes-passo";
+
+                const btnEditar = document.createElement("button");
+                btnEditar.type = "button";
+                btnEditar.title = "Editar este trecho";
+                btnEditar.setAttribute("aria-label", "Editar este trecho");
+                btnEditar.textContent = "✏️";
+                btnEditar.disabled = !nuvemConfigurada();
+                btnEditar.onclick = () => editarTrechoMusica(i);
+
+                const btnExcluir = document.createElement("button");
+                btnExcluir.type = "button";
+                btnExcluir.title = "Excluir este trecho da playlist";
+                btnExcluir.setAttribute("aria-label", "Excluir este trecho da playlist");
+                btnExcluir.textContent = "✕";
+                btnExcluir.disabled = !nuvemConfigurada();
+                btnExcluir.onclick = () => excluirTrechoMusica(i);
+
+                acoesPasso.append(btnEditar, btnExcluir);
+                passo.append(alcaArraste, numero, info, acoesPasso);
+                trilha.appendChild(passo);
+
+                if (i < musicas.length - 1) {
+                    const seta = document.createElement("div");
+                    seta.className = "conector";
+                    seta.textContent = "↓";
+                    trilha.appendChild(seta);
+                }
+            });
+
+            if (totalEl) {
+                let texto = musicas.length + (musicas.length === 1 ? " trecho" : " trechos");
+                if (totalSegundos > 0) texto += " • " + formatarSegundos(totalSegundos);
+                if (temMusicaInteira) texto += (totalSegundos > 0 ? " + " : " • ") + "música inteira";
+                totalEl.textContent = texto;
+            }
+            atualizarBotaoPlaylist();
+        }
+
+        function configurarArrasteLinhaTempo(alca, passo, indiceInicial) {
+            let arraste = null;
+            passo.dataset.indice = String(indiceInicial);
+
+            alca.addEventListener("pointerdown", evento => {
+                if (!nuvemConfigurada() || enviando || evento.button !== 0) return;
+                evento.preventDefault();
+                arraste = {
+                    ponteiro: evento.pointerId,
+                    indiceOrigem: Number(passo.dataset.indice),
+                    indiceDestino: Number(passo.dataset.indice),
+                    yInicial: evento.clientY,
+                    iniciou: false
+                };
+                alca.setPointerCapture(evento.pointerId);
+            });
+
+            alca.addEventListener("pointermove", evento => {
+                if (!arraste || evento.pointerId !== arraste.ponteiro) return;
+                if (!arraste.iniciou && Math.abs(evento.clientY - arraste.yInicial) < 6) return;
+                arraste.iniciou = true;
+                passo.classList.add("arrastando");
+                const sobPonteiro = document.elementFromPoint(evento.clientX, evento.clientY);
+                const alvo = sobPonteiro && sobPonteiro.closest(".passo-tempo");
+                document.querySelectorAll("#linhaTempo .passo-tempo.alvo-arraste")
+                    .forEach(item => item.classList.remove("alvo-arraste"));
+                if (alvo && alvo.parentElement === passo.parentElement) {
+                    arraste.indiceDestino = Number(alvo.dataset.indice);
+                    alvo.classList.add("alvo-arraste");
+                }
+            });
+
+            const finalizar = evento => {
+                if (!arraste || evento.pointerId !== arraste.ponteiro) return;
+                const { indiceOrigem, indiceDestino, iniciou } = arraste;
+                arraste = null;
+                document.querySelectorAll("#linhaTempo .passo-tempo")
+                    .forEach(item => item.classList.remove("arrastando", "alvo-arraste"));
+                if (iniciou && indiceOrigem !== indiceDestino) reordenarMusica(indiceOrigem, indiceDestino);
+            };
+
+            alca.addEventListener("pointerup", finalizar);
+            alca.addEventListener("pointercancel", finalizar);
+            alca.addEventListener("keydown", evento => {
+                if (evento.key !== "ArrowUp" && evento.key !== "ArrowDown") return;
+                evento.preventDefault();
+                const delta = evento.key === "ArrowUp" ? -1 : 1;
+                const destino = Number(passo.dataset.indice) + delta;
+                if (destino >= 0 && destino < musicas.length) {
+                    reordenarMusica(Number(passo.dataset.indice), destino);
+                }
+            });
+        }
+
+        async function reordenarMusica(origem, destino) {
+            if (enviando || origem < 0 || destino < 0 || origem >= musicas.length || destino >= musicas.length) return;
+            const anteriores = musicas.slice();
+            const sourceAtual = musicasSrc[musicaIndex];
+            const sourceEditor = indiceEditorMusica === null ? "" : musicasSrc[indiceEditorMusica];
+            const novasMusicas = musicas.slice();
+            const [movida] = novasMusicas.splice(origem, 1);
+            novasMusicas.splice(destino, 0, movida);
+            pararPreviaPlaylist(true);
+
+            const sucesso = await executar("Salvando a ordem da playlist...", () =>
+                salvarBiblioteca({ musicas: novasMusicas }));
+
+            if (!sucesso) {
+                musicas = anteriores;
+                prepararSources();
+                atualizarTudo();
+                const focoAnterior = document.querySelector(
+                    '#linhaTempo [data-reorder-index="' + origem + '"]'
+                );
+                if (focoAnterior) focoAnterior.focus();
+                return;
+            }
+
+            marcarAbaMusicasAlterada();
+            prepararSources();
+            const novoIndiceAtual = musicasSrc.indexOf(sourceAtual);
+            if (novoIndiceAtual >= 0) musicaIndex = novoIndiceAtual;
+            indiceEditorMusica = sourceEditor ? musicasSrc.indexOf(sourceEditor) : null;
+            if (indiceEditorMusica < 0) indiceEditorMusica = null;
+            atualizarTudo();
+            const focoNovo = document.querySelector(
+                '#linhaTempo [data-reorder-index="' + destino + '"]'
+            );
+            if (focoNovo) focoNovo.focus();
+            avisar("Ordem da playlist salva.", 3000);
+        }
+
+        function formatarSegundos(total) {
+            const segundos = Math.max(0, Math.round(Number(total) || 0));
+            const minutos = Math.floor(segundos / 60);
+            const resto = segundos % 60;
+            return minutos > 0 ? minutos + ":" + String(resto).padStart(2, "0") : resto + "s";
+        }
+
+        function descreverTrecho(entrada) {
+            const inicio = Math.round(Number(entrada && entrada.inicio) || 0);
+            const duracao = Math.round(Number(entrada && entrada.duracao) || 0);
+            if (!inicio && !duracao) return "toca a música inteira";
+            if (!duracao) return "a partir de " + formatarSegundos(inicio) + " (até o fim)";
+            return formatarSegundos(inicio) + " → " + formatarSegundos(inicio + duracao) +
+                " (" + formatarSegundos(duracao) + ")";
+        }
+
+        function temTrecho(entrada) {
+            return Number(entrada && entrada.inicio) > 0 || Number(entrada && entrada.duracao) > 0;
+        }
+
+        function mostrarEditorMusica(indice) {
+            const cartao = document.querySelectorAll("#listaMusicas .item-musica")[indice];
+            if (!cartao) return;
+            cartao.scrollIntoView({ behavior: "smooth", block: "center" });
+            const campo = cartao.querySelector(".trecho-musica input");
+            if (campo) setTimeout(() => campo.focus(), 320);
+        }
+
+        function editarTrechoMusica(indice) {
+            indiceEditorMusica = indice;
+            pausarMusicaPrincipal();
+            pararPreviaPlaylist(true);
+            renderizarPainelMusicas();
+            mostrarEditorMusica(indice);
+        }
+
+        function alternarEditorMusica(indice) {
+            if (indiceEditorMusica === indice) {
+                indiceEditorMusica = null;
+                renderizarPainelMusicas();
+                return;
+            }
+            editarTrechoMusica(indice);
+        }
+
+        async function excluirTrechoMusica(indice) {
+            if (!exigirNuvem()) return;
+            const entrada = musicas[indice];
+            if (!entrada) return;
+            if (!confirm("Excluir o trecho " + (indice + 1) + " (" + (entrada.nome || "música") +
+                ") da playlist?\n\nEle sai da sequência e o próximo assume o lugar.")) return;
+            await removerMusica(indice, true);
+        }
+
+        function recomecarPlaylist() {
+            if (!musicas.length) {
+                avisar("Adicione pelo menos uma música antes de recomeçar.");
+                return;
+            }
+            if (enviando) return;
+
+            pararPreviaPlaylist(true);
+            pausarMusicaPrincipal();
+            indiceEditorMusica = null;
+            fecharGerenciar();
+
+            musicaIndex = 0;
+            fotoIndex = 0;
+            clearInterval(intervaloFotos);
+            intervaloFotos = setInterval(proxima, 4000);
+            atualizarTudo();
+            setTimeout(() => {
+                tocarTrechoAtual();
+            }, 120);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            avisar("Playlist reiniciada do começo 💖", 4000);
         }
 
         function renderizarPainelMusicas() {
@@ -1842,28 +3248,165 @@
 
                 const player = document.createElement("audio");
                 player.controls = true;
-                player.preload = "none";
-                player.src = musicasSrc[i] || "";
+                const aberto = indiceEditorMusica === i || !temTrecho(entrada);
+                player.preload = aberto ? "metadata" : "none";
+                if (aberto) {
+                    player.src = musicasSrc[i] || "";
+                }
+
+                // ---------- trecho: de onde começa e quanto toca ----------
+                const trecho = document.createElement("div");
+                trecho.className = "trecho-musica";
+
+                const camposTrecho = document.createElement("div");
+                camposTrecho.className = "campos-trecho";
+
+                const campoInicio = document.createElement("label");
+                campoInicio.className = "campo-trecho";
+                campoInicio.append(document.createTextNode("Começa em"));
+                const inputInicio = document.createElement("input");
+                inputInicio.type = "number";
+                inputInicio.min = "0";
+                inputInicio.step = "1";
+                inputInicio.inputMode = "numeric";
+                inputInicio.value = String(Math.round(Number(entrada.inicio) || 0));
+                inputInicio.disabled = !podeEditar || enviando;
+                campoInicio.append(inputInicio, document.createTextNode("s"));
+
+                const campoDuracao = document.createElement("label");
+                campoDuracao.className = "campo-trecho";
+                campoDuracao.append(document.createTextNode("Toca por"));
+                const inputDuracao = document.createElement("input");
+                inputDuracao.type = "number";
+                inputDuracao.min = "1";
+                inputDuracao.step = "1";
+                inputDuracao.inputMode = "numeric";
+                inputDuracao.placeholder = "tudo";
+                inputDuracao.value = entrada.duracao ? String(Math.round(entrada.duracao)) : "";
+                inputDuracao.disabled = !podeEditar || enviando;
+                campoDuracao.append(inputDuracao, document.createTextNode("s"));
+
+                camposTrecho.append(campoInicio, campoDuracao);
+
+                const legendaOnda = document.createElement("p");
+                legendaOnda.className = "onda-legenda";
+
+                const onda = criarEditorOnda(
+                    player,
+                    entrada,
+                    musicasSrc[i] || "",
+                    inputInicio,
+                    inputDuracao,
+                    legendaOnda,
+                    podeEditar && !enviando
+                );
+
+                const resumoTrecho = document.createElement("p");
+                resumoTrecho.className = "dica-trecho";
+                const partesTrecho = [];
+                if (Number(entrada.inicio) > 0) partesTrecho.push("começa em " + Math.round(entrada.inicio) + "s");
+                if (Number(entrada.duracao) > 0) partesTrecho.push("toca " + Math.round(entrada.duracao) + "s");
+                resumoTrecho.textContent = partesTrecho.length
+                    ? partesTrecho.join(" • ")
+                    : "toca a música inteira";
+
+                const acoesTrecho = document.createElement("div");
+                acoesTrecho.className = "acoes-trecho";
+
+                let fimDoTeste = null;
+                player.addEventListener("timeupdate", () => {
+                    if (fimDoTeste !== null && player.currentTime >= fimDoTeste) {
+                        player.pause();
+                        try {
+                            player.currentTime = fimDoTeste;
+                        } catch (erro) { }
+                        fimDoTeste = null;
+                    }
+                });
+
+                // Ao dar play no player do cartão, a música principal pausa
+                player.addEventListener("play", () => {
+                    pausarMusicaPrincipal();
+                    pararPreviaPlaylist(true);
+                });
+
+                const btnMomento = document.createElement("button");
+                btnMomento.type = "button";
+                btnMomento.textContent = "⏱ Usar o momento";
+                btnMomento.title = "Copia o segundo em que este player está tocando";
+                btnMomento.disabled = !podeEditar || enviando;
+                btnMomento.onclick = () => {
+                    inputInicio.value = String(Math.floor(player.currentTime || 0));
+                    inputInicio.focus();
+                };
+
+                const btnOuvir = document.createElement("button");
+                btnOuvir.type = "button";
+                btnOuvir.textContent = "▶ Ouvir trecho";
+                btnOuvir.disabled = !podeEditar || enviando;
+                btnOuvir.onclick = async () => {
+                    pausarMusicaPrincipal();
+                    pararPreviaPlaylist(true);
+                    const de = Math.max(0, Math.round(Number(inputInicio.value) || 0));
+                    const quanto = Math.round(Number(inputDuracao.value) || 0);
+                    await aguardarMetadata(player);
+                    try {
+                        player.currentTime = de;
+                    } catch (erro) { }
+                    fimDoTeste = quanto > 0 ? de + quanto : null;
+                    player.play().catch(() => { });
+                };
+
+                const btnSalvarTrecho = document.createElement("button");
+                btnSalvarTrecho.type = "button";
+                btnSalvarTrecho.className = "salvar-trecho";
+                btnSalvarTrecho.textContent = "💾 Salvar trecho";
+                btnSalvarTrecho.disabled = !podeEditar || enviando;
+                btnSalvarTrecho.onclick = () => {
+                    pararPreviaPlaylist(true);
+                    salvarTrechoMusica(i, inputInicio.value, inputDuracao.value);
+                };
+
+                acoesTrecho.append(btnMomento, btnOuvir, btnSalvarTrecho);
+                trecho.append(camposTrecho, onda, legendaOnda, acoesTrecho);
 
                 const acoes = document.createElement("div");
                 acoes.className = "acoes";
 
+                const btnEditar = document.createElement("button");
+                btnEditar.type = "button";
+                btnEditar.textContent = aberto ? "✕ Fechar" : "✏️ Editar";
+                btnEditar.title = "Editar o trecho desta música";
+                btnEditar.disabled = !podeEditar;
+                btnEditar.onclick = () => alternarEditorMusica(i);
+                if (!temTrecho(entrada)) btnEditar.style.display = "none";
+
                 const btnTrocar = document.createElement("button");
                 btnTrocar.type = "button";
                 btnTrocar.textContent = "🔄 Trocar";
+                btnTrocar.setAttribute("aria-label", "Trocar " + (entrada.nome || "música"));
                 btnTrocar.disabled = !podeEditar || enviando;
                 btnTrocar.onclick = () => escolherMusicaParaTrocar(i);
 
                 const btnRemover = document.createElement("button");
                 btnRemover.type = "button";
                 btnRemover.textContent = "🗑 Remover";
+                btnRemover.setAttribute("aria-label", "Remover " + (entrada.nome || "música"));
                 btnRemover.disabled = !podeEditar || enviando;
                 btnRemover.onclick = () => removerMusica(i);
 
-                acoes.append(btnTrocar, btnRemover);
-                item.append(nome, player, acoes);
+                acoes.append(btnEditar, btnTrocar, btnRemover);
+
+                const topo = document.createElement("div");
+                topo.className = "musica-topo";
+                topo.append(nome, resumoTrecho);
+
+                item.append(topo, player, acoes);
+                if (aberto) item.appendChild(trecho);
                 lista.appendChild(item);
             });
+
+            renderizarLinhaTempo();
         }
 
         function atualizarTudo() {
@@ -1873,6 +3416,7 @@
             atualizarStatusNuvem();
             renderizarPainelFotos();
             renderizarPainelMusicas();
+            renderizarLinhaTempo();
         }
 
         function exigirNuvem() {
@@ -1971,7 +3515,8 @@
 
             const entrada = fotos[indice];
             if (!entrada) return;
-            if (!confirm("Remover a foto " + (indice + 1) + "?")) return;
+            if (!confirm("Remover \"" + (entrada.nome || "foto " + (indice + 1)) +
+                "\" da galeria?\n\nEsta ação não pode ser desfeita.")) return;
 
             const novasFotos = fotos.slice();
             novasFotos.splice(indice, 1);
@@ -1994,7 +3539,8 @@
                 avisar("Não há fotos para remover.");
                 return;
             }
-            if (!confirm("Remover todas as " + fotos.length + " fotos?")) return;
+            if (!confirm("Remover todas as " + fotos.length +
+                " fotos da galeria?\n\nEsta ação não pode ser desfeita.")) return;
 
             const remover = fotos
                 .filter(item => item.origem === "storage")
@@ -2013,7 +3559,7 @@
 
         async function restaurarFotos() {
             if (!exigirNuvem()) return;
-            if (!confirm("Restaurar as 25 fotos originais? As fotos adicionadas ou trocadas serão descartadas.")) return;
+            if (!confirm("Restaurar as 25 fotos originais?\n\nAs fotos adicionadas ou trocadas serão removidas.")) return;
 
             const remover = fotos
                 .filter(item => item.origem === "storage")
@@ -2065,12 +3611,13 @@
                 }
                 const caminho = caminhoDeArquivo("musicas", arquivo);
                 envios.push({ path: caminho, blob: arquivo });
-                novasMusicas.push({ arquivo: caminho, nome: arquivo.name, origem: "storage" });
+                novasMusicas.push({ arquivo: caminho, nome: arquivo.name, origem: "storage", inicio: 0, duracao: null });
             }
 
             if (grandes) avisar(grandes + " arquivo(s) ignorado(s) por passar de 20 MB.", 5000);
             if (!envios.length) return;
 
+            pararPreviaPlaylist(true);
             const sucesso = await executar("Enviando músicas...", () => salvarBiblioteca({
                 musicas: novasMusicas,
                 arquivos: envios,
@@ -2078,6 +3625,7 @@
             }));
 
             if (!sucesso) return;
+            marcarAbaMusicasAlterada();
             atualizarTudo();
             avisar("Música(s) salva(s) na nuvem!", 5000);
         }
@@ -2105,8 +3653,9 @@
             if (!antiga) return;
 
             const caminho = caminhoDeArquivo("musicas", arquivo);
+            pararPreviaPlaylist(true);
             const novasMusicas = musicas.slice();
-            novasMusicas[indice] = { arquivo: caminho, nome: arquivo.name, origem: "storage" };
+            novasMusicas[indice] = { arquivo: caminho, nome: arquivo.name, origem: "storage", inicio: 0, duracao: null };
             const remover = antiga.origem === "storage" ? [antiga.arquivo] : [];
 
             const sucesso = await executar("Trocando música...", () => salvarBiblioteca({
@@ -2116,19 +3665,22 @@
             }));
 
             if (!sucesso) return;
+            marcarAbaMusicasAlterada();
             delete audioMusica.dataset.srcAtual;
             atualizarTudo();
             avisar("Música trocada!", 5000);
         }
 
-        async function removerMusica(indice) {
+        async function removerMusica(indice, jaConfirmado) {
             if (!exigirNuvem()) return;
 
             const entrada = musicas[indice];
             if (!entrada) return;
-            if (!confirm("Remover a música " + (indice + 1) + "?")) return;
+            if (!jaConfirmado && !confirm("Remover \"" + (entrada.nome || "música " + (indice + 1)) +
+                "\" da playlist?\n\nEsta ação não pode ser desfeita.")) return;
 
             const eraAtual = indice === musicaIndex;
+            pararPreviaPlaylist(true);
             const novasMusicas = musicas.slice();
             novasMusicas.splice(indice, 1);
             const remover = entrada.origem === "storage" ? [entrada.arquivo] : [];
@@ -2139,9 +3691,11 @@
             }));
 
             if (!sucesso) return;
+            marcarAbaMusicasAlterada();
             if (indice < musicaIndex) musicaIndex--;
             if (musicaIndex >= musicas.length) musicaIndex = 0;
             if (eraAtual) delete audioMusica.dataset.srcAtual;
+            indiceEditorMusica = null;
             atualizarTudo();
             avisar("Música removida.", 5000);
         }
@@ -2152,8 +3706,10 @@
                 avisar("Não há músicas para remover.");
                 return;
             }
-            if (!confirm("Remover todas as " + musicas.length + " músicas?")) return;
+            if (!confirm("Remover todas as " + musicas.length +
+                " músicas da playlist?\n\nEsta ação não pode ser desfeita.")) return;
 
+            pararPreviaPlaylist(true);
             const remover = musicas
                 .filter(item => item.origem === "storage")
                 .map(item => item.arquivo);
@@ -2164,10 +3720,56 @@
             }));
 
             if (!sucesso) return;
+            marcarAbaMusicasAlterada();
             musicaIndex = 0;
             delete audioMusica.dataset.srcAtual;
             atualizarTudo();
             avisar("Todas as músicas foram removidas.", 5000);
+        }
+
+        /* ---------- Trecho da música (começo e duração) ---------- */
+        async function salvarTrechoMusica(indice, inicioTexto, duracaoTexto) {
+            if (!exigirNuvem()) return;
+
+            const entrada = musicas[indice];
+            if (!entrada) return;
+
+            const inicio = Math.max(0, Math.round(Number(inicioTexto) || 0));
+            const duracaoTextoLimpo = String(duracaoTexto === null || duracaoTexto === undefined ? "" : duracaoTexto).trim();
+            const duracao = Math.round(Number(duracaoTextoLimpo) || 0);
+
+            if (duracaoTextoLimpo !== "" && duracao < 1) {
+                avisar("A duração precisa ter pelo menos 1 segundo.");
+                return;
+            }
+
+            const novasMusicas = musicas.slice();
+            novasMusicas[indice] = Object.assign({}, entrada, {
+                inicio: inicio,
+                duracao: duracao > 0 ? duracao : null
+            });
+
+            const sucesso = await executar("Salvando o trecho...", () => salvarBiblioteca({
+                musicas: novasMusicas
+            }));
+
+            if (!sucesso) return;
+            marcarAbaMusicasAlterada();
+
+            indiceEditorMusica = null;
+            if (indice === musicaIndex) {
+                const alvo = inicioDaMusicaAtual();
+                if (isFinite(audioMusica.duration) && audioMusica.duration > 0) {
+                    try {
+                        audioMusica.currentTime = alvo < audioMusica.duration ? alvo : 0;
+                    } catch (erro) { }
+                }
+            }
+
+            atualizarTudo();
+            avisar(duracao > 0
+                ? "Trecho salvo! A música toca " + duracao + "s e passa para a próxima."
+                : "Trecho salvo! A música toca inteira a partir de " + inicio + "s.", 6000);
         }
 
         /* ---------- Entradas de arquivo ---------- */
@@ -2217,9 +3819,76 @@
             if (evento.target.id === "modalGerenciar") fecharGerenciar();
         });
 
-        // Fechar o painel com Esc
-        document.addEventListener("keydown", (evento) => {
-            if (evento.key === "Escape") fecharGerenciar();
+        function manterFocoNoModal(evento, container) {
+            if (evento.key !== "Tab") return;
+            const elementos = Array.from(container.querySelectorAll(
+                'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            )).filter(elemento => elemento.getClientRects().length > 0);
+            if (!elementos.length) {
+                evento.preventDefault();
+                container.focus();
+                return;
+            }
+
+            const primeiro = elementos[0];
+            const ultimo = elementos[elementos.length - 1];
+            if (evento.shiftKey && (document.activeElement === primeiro || !container.contains(document.activeElement))) {
+                evento.preventDefault();
+                ultimo.focus();
+            } else if (!evento.shiftKey &&
+                (document.activeElement === ultimo || !container.contains(document.activeElement))) {
+                evento.preventDefault();
+                primeiro.focus();
+            }
+        }
+
+        document.addEventListener("keydown", evento => {
+            const gerenciador = document.getElementById("modalGerenciar");
+            const descricao = document.getElementById("modalDescricao");
+            const modalCurtir = document.getElementById("modal");
+
+            if (gerenciador.style.display === "flex") {
+                if (evento.key === "Escape") {
+                    evento.preventDefault();
+                    fecharGerenciar();
+                } else {
+                    manterFocoNoModal(evento, document.getElementById("painelGerenciar"));
+                }
+                return;
+            }
+
+            if (descricao.style.display === "flex") {
+                if (evento.key === "Escape") {
+                    evento.preventDefault();
+                    fecharDescricao();
+                } else {
+                    manterFocoNoModal(evento, descricao.querySelector(".caixa-sobre"));
+                }
+                return;
+            }
+
+            if (modalCurtir.style.display === "flex" && evento.key === "Escape") {
+                evento.preventDefault();
+                fecharModal();
+            } else if (modalCurtir.style.display === "flex") {
+                manterFocoNoModal(evento, document.getElementById("modal-content"));
+            }
+        });
+
+        document.querySelectorAll('[role="tablist"]').forEach(lista => {
+            lista.addEventListener("keydown", evento => {
+                const abas = Array.from(lista.querySelectorAll('[role="tab"]'));
+                const atual = abas.indexOf(document.activeElement);
+                if (atual < 0 || !["ArrowLeft", "ArrowRight", "Home", "End"].includes(evento.key)) return;
+                evento.preventDefault();
+                let proximo = atual;
+                if (evento.key === "ArrowRight") proximo = (atual + 1) % abas.length;
+                if (evento.key === "ArrowLeft") proximo = (atual - 1 + abas.length) % abas.length;
+                if (evento.key === "Home") proximo = 0;
+                if (evento.key === "End") proximo = abas.length - 1;
+                abas[proximo].focus();
+                abas[proximo].click();
+            });
         });
 
         // Ao voltar para a aba, atualiza para ver o que a outra pessoa mudou
@@ -2533,7 +4202,9 @@
 
         async function apagarMensagem(item) {
             if (!item || item.id === undefined || item.id === null) return;
-            if (!confirm("Apagar esta mensagem?")) return;
+            const previa = String(item.texto || "").trim().slice(0, 100);
+            if (!confirm("Apagar esta mensagem?\n\n\"" + previa + (String(item.texto || "").length > 100 ? "…" : "") +
+                "\"\n\nEsta ação não pode ser desfeita.")) return;
 
             try {
                 const resposta = await fetch(
@@ -2564,16 +4235,26 @@
             };
             Object.keys(paineis).forEach(chave => {
                 const painel = document.getElementById(paineis[chave]);
-                if (painel) painel.style.display = (chave === nome) ? "block" : "none";
+                if (painel) {
+                    painel.style.display = (chave === nome) ? "block" : "none";
+                    painel.setAttribute("aria-hidden", String(chave !== nome));
+                }
             });
             document.querySelectorAll(".sobre-aba").forEach(botao => {
-                botao.classList.toggle("ativa", botao.dataset.sobreAba === nome);
+                const selecionada = botao.dataset.sobreAba === nome;
+                botao.classList.toggle("ativa", selecionada);
+                botao.setAttribute("aria-selected", String(selecionada));
+                botao.tabIndex = selecionada ? 0 : -1;
             });
         }
 
         // Fecha o "Sobre Nós" clicando fora ou com Esc
         document.getElementById("modalDescricao").addEventListener("click", evento => {
             if (evento.target.id === "modalDescricao") fecharDescricao();
+        });
+
+        document.getElementById("modal").addEventListener("click", evento => {
+            if (evento.target.id === "modal") fecharModal();
         });
 
         document.addEventListener("keydown", evento => {
@@ -2588,26 +4269,43 @@
 
         // Modal principal (Curtir)
         function mostrarModal() {
-            document.getElementById("modal").style.display = "flex";
+            const modal = document.getElementById("modal");
+            modal.style.display = "flex";
+            modal.setAttribute("aria-hidden", "false");
+            modal.querySelector("button").focus();
         }
 
         function fecharModal() {
-            document.getElementById("modal").style.display = "none";
+            const modal = document.getElementById("modal");
+            modal.style.display = "none";
+            modal.setAttribute("aria-hidden", "true");
+            document.getElementById("curtirBtn").focus();
         }
 
         // Modal Descrição
         function mostrarDescricao() {
-            document.getElementById("modalDescricao").style.display = "flex";
+            focoDescricaoAnterior = document.activeElement;
+            const modal = document.getElementById("modalDescricao");
+            modal.style.display = "flex";
+            modal.setAttribute("aria-hidden", "false");
+            modal.querySelector(".sobre-fechar").focus();
             renderizarMensagens();
             carregarMensagens();
         }
 
         function fecharDescricao() {
-            document.getElementById("modalDescricao").style.display = "none";
+            const modal = document.getElementById("modalDescricao");
+            if (modal.style.display === "none") return;
+            modal.style.display = "none";
+            modal.setAttribute("aria-hidden", "true");
+            if (focoDescricaoAnterior && typeof focoDescricaoAnterior.focus === "function") {
+                focoDescricaoAnterior.focus();
+            }
+            focoDescricaoAnterior = null;
         }
 
         // Corações subindo
-        setInterval(() => {
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => {
             const heart = document.createElement("div");
             heart.classList.add("heart");
             heart.style.left = Math.random() * 100 + "vw";
